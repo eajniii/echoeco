@@ -8,7 +8,7 @@ public class ProjectController {
 
 	@GetMapping("/projects")
 	public String projectList() {
-		return "projectList";
+		return "index";
 	}
 
 }
