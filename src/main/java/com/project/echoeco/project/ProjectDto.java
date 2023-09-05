@@ -20,17 +20,6 @@ public class ProjectDto {
   @NotNull(message = "목표 금액을 입력하세요")
   private Integer goal;
 
-  private String imgName;
-
-  private String imgUrl;
-
   private ProjectStatus project_status;
 
-  public Integer getId() {
-    return null;
-  }
-
-  public Integer getId() {
-    return null;
-  }
 }

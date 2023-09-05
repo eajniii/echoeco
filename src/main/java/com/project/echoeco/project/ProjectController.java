@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.RequiredArgsConstructor;
 
@@ -31,9 +32,9 @@ public class ProjectController {
 	}
 
 	@PostMapping("/create")
-	public void saveProject(ProjectDto projectDto) {
-		projectService.create(projectDto);
-
+	public String saveProject(ProjectDto projectDto, MultipartFile imgFile) throws Exception {
+		projectService.newProject(projectDto, imgFile);
+		return "redirect:/list";
 	}
 
 }

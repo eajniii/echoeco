@@ -41,7 +41,8 @@ public class Project {
   private ProjectStatus project_status;
 
   @Builder
-  public Project(String object, String title, String content, Integer goal, String imgName, String imgPath,
+  public Project(String object, String title, String content, Integer goal,
+      String imgName, String imgPath,
       ProjectStatus project_status) {
     this.object = object;
     this.title = title;
