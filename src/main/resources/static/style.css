@@ -1,3 +1,4 @@
+
 *{
   font-family: 'Noto Serif KR', serif;
   list-style: none;
@@ -18,11 +19,12 @@ body {
   margin-left: 200px;
   margin-right: 200px;
 }
-
+.logo>img{
+  width:100px;
+}
 a{
   text-decoration: none;
 }
-
 
 footer{
   background-color: #cff0da;

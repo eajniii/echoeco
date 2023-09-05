@@ -17,15 +17,15 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;400&display=swap" rel="stylesheet">
 
-  <!-- thymeleaf -->
-  <th:block layout:fragment="script"></th:block>
-  <th:block layout:fragment="css"></th:block>
-  <link th:href="@{/css/style.css}" rel="stylesheet">
+  <!-- css, js -->
+
+  <link th:href="@{/style.css}" rel="stylesheet">
   
   <title>Echo ECO🌳🌷🌴🌿</title>
 </head>
 <body>
-    
+ 
+
     <header th:replace="~{/common/header :: header}"></header>
 
     <main layout:fragment="content" class="content">

@@ -1,4 +1,4 @@
-package com.project.echoeco.domain;
+package com.project.echoeco.project;
 
 public enum ProjectStatus {
   ONGOING, CLOSED

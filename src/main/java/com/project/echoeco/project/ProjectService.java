@@ -1,23 +1,36 @@
 package com.project.echoeco.project;
 
-import org.springframework.stereotype.Service;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
-import com.project.echoeco.controller.ProjectDto;
-import com.project.echoeco.domain.Project;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ProjectService {
   private final ProjectRepository projectRepository;
+  public List<Project> getProjects;
+
+  @Transactional(readOnly = true)
+  public List<Project> getProjects() {
+
+    return projectRepository.findAll();
+
+  }
 
   public void create(ProjectDto projectDto) {
     Project project = Project.builder()
         .title(projectDto.getTitle())
         .content(projectDto.getContent())
-        .img_url(projectDto.getImg_url())
         .goal(projectDto.getGoal())
+        .imgName(projectDto.getImgName())
+        .imgPath(projectDto.getImgUrl())
         .project_status(projectDto.getProject_status())
         .build();
 
