@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>회원가입창</title>
+</head>
+<body>
+	<h2>회원가입</h2>
+	<script th:inline = "javascript">
+		$(document).ready(function(){
+			var errorMessage = [[${errorMessage}]]
+			if(errorMessage != null){
+				alert(erroeMessage);
+			}
+		
+		});
+		
+	</script>
+	<hr>
+	<form th:action="@{/member/signup}" method="post" th:object="${memberDTO}">
+		<div>
+			<label for="email">이름</label>
+			<input type="text" th:field="*{email}" th:value="${memberDTO.email}" placeholder="이메일을 입력해주세요">
+		<!-- 에러메세지 뜨는 부분 -->
+		</div>
+		<div>
+			<label for="password">비밀번호</label>
+			<input type="password" th:field="*{password}" th:value="${memberDTO.password}" placeholder="비밀번호를 입력해주세요">
+		<!-- 에러메세지 뜨는 부분 -->		
+		</div>
+		<div>
+			<label for="name">이름</label>
+			<input type="text" th:field="*{name}" th:value="${memberDTO.name}" placeholder="이름을 입력해주세요">
+		<!-- 에러메세지 뜨는 부분 -->
+		</div>
+		<div>
+			<label for="tel">연락처</label>
+			<input type="text" th:field="*{tel}" th:value="${memberDTO.tel}" placeholder="연락가능한 휴대번호를 입력해주세요">
+		<!-- 에러메세지 뜨는 부분 -->
+		</div>
+		
+		<button type="submit">회원 가입</button>
+	</form>
+
+</hr>
+	
+</body>
+</html>
