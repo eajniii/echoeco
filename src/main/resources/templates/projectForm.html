@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{baseLayout}">
+
+    <th:block layout:fragment="script"></th:block>
+    <th:block layout:fragment="css"> </th:block>     
+
+    <main layout:fragment="content">
+      <form th:action="@{/project/create}"  th:object="${projectDto}" method="post" enctype="multipart/form-data">
+        <select class="form-select" aria-label="Default select example">
+          <option selected>프로젝트 목적을 선택하세요</option>
+          <option value="1">석탄 연료 감소</option>
+          <option value="2">해양 오염 완화</option>
+          <option value="3">폐기물 축소</option>
+          <option value="4">기타</option>
+        </select>
+        <div class="input-group">
+          <span class="input-group-text">With textarea</span>
+          <textarea class="form-control" aria-label="With textarea"></textarea>
+        </div>
+        <div class="input-group">
+          <input type="text" class="form-control" aria-label="amount">
+          <span class="input-group-text">원</span>
+        </div>
+        <div class="input-group mb-3">
+          <input type="file" class="form-control" id="inputGroupFile02 imgfile" name = "imgfile">
+          <label class="input-group-text" for="inputGroupFile02" >Upload</label>
+        </div>  
+        <div class="col-12">
+          <button class="btn btn-primary" type="submit">Submit form</button>
+        </div>
+      </form>
+    </main>
+
+</html>

@@ -1,23 +1,47 @@
 package com.project.echoeco.project;
 
-import org.springframework.stereotype.Service;
+import java.io.File;
+import java.util.List;
+import java.util.UUID;
 
-import com.project.echoeco.controller.ProjectDto;
-import com.project.echoeco.domain.Project;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ProjectService {
   private final ProjectRepository projectRepository;
+  public List<Project> getProjects;
 
-  public void create(ProjectDto projectDto) {
+  @Transactional(readOnly = true)
+  public List<Project> getProjects() {
+
+    return projectRepository.findAll();
+
+  }
+
+  public void newProject(ProjectDto projectDto, MultipartFile imgFile) throws Exception {
+    String oriImgName = imgFile.getOriginalFilename();
+    String imgName = "";
+    String projectPath = System.getProperty("user.dir") + "src/main/resources/static/files";
+
+    UUID uudi = UUID.randomUUID();
+    String savedFileName = uudi + "_" + oriImgName;
+    imgName = savedFileName;
+
+    File saveFiles = new File(projectPath, imgName);
+    imgFile.transferTo(saveFiles);
+
     Project project = Project.builder()
         .title(projectDto.getTitle())
         .content(projectDto.getContent())
-        .img_url(projectDto.getImg_url())
         .goal(projectDto.getGoal())
+        .imgName(imgName)
+        .imgPath("/files/" + imgName)
         .project_status(projectDto.getProject_status())
         .build();
 
