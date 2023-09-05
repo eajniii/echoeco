@@ -15,7 +15,7 @@ public class ProjectDto {
   private String title;
 
   @NotBlank(message = "프로젝트의 상세 내용을 입력하세요.")
-  private String content;
+  private String contents;
 
   @NotNull(message = "목표 금액을 입력하세요")
   private Integer goal;

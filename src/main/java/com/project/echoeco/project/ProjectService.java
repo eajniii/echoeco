@@ -27,7 +27,7 @@ public class ProjectService {
   public void newProject(ProjectDto projectDto, MultipartFile imgFile) throws Exception {
     String oriImgName = imgFile.getOriginalFilename();
     String imgName = "";
-    String projectPath = System.getProperty("user.dir") + "src/main/resources/static/files";
+    String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/files";
 
     UUID uudi = UUID.randomUUID();
     String savedFileName = uudi + "_" + oriImgName;
@@ -37,8 +37,9 @@ public class ProjectService {
     imgFile.transferTo(saveFiles);
 
     Project project = Project.builder()
+        .object(projectDto.getObject())
         .title(projectDto.getTitle())
-        .content(projectDto.getContent())
+        .contents(projectDto.getContents())
         .goal(projectDto.getGoal())
         .imgName(imgName)
         .imgPath("/files/" + imgName)

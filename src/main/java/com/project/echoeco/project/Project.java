@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 
+import groovy.transform.ToString;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,6 +19,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@ToString
 public class Project {
   @Id
   @Column(name = "project_id")
@@ -29,7 +31,7 @@ public class Project {
   private String title;
 
   @Lob
-  private String content;
+  private String contents;
 
   private Integer goal;
 
@@ -41,12 +43,12 @@ public class Project {
   private ProjectStatus project_status;
 
   @Builder
-  public Project(String object, String title, String content, Integer goal,
+  public Project(String object, String title, String contents, Integer goal,
       String imgName, String imgPath,
       ProjectStatus project_status) {
     this.object = object;
     this.title = title;
-    this.content = content;
+    this.contents = contents;
     this.goal = goal;
     this.imgName = imgName;
     this.imgPath = imgPath;

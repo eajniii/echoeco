@@ -10,25 +10,27 @@
       <form th:action="@{/project/create}"  th:object="${projectDto}" method="post" enctype="multipart/form-data">
         <select class="form-select" aria-label="Default select example">
           <option selected>프로젝트 목적을 선택하세요</option>
-          <option value="1">석탄 연료 감소</option>
-          <option value="2">해양 오염 완화</option>
-          <option value="3">폐기물 축소</option>
-          <option value="4">기타</option>
+          <option th:value="1" th:text="1">석탄 연료 감소</option>
+          <option th:value="2" th:text="2">해양 오염 완화</option>
+          <option th:value="3" th:text="3">폐기물 축소</option>
+          <option th:value="4" th:text="4">기타</option>
         </select>
+        <div class="mb-3">
+          <input type="text" class="form-control" th:field="*{title}">
+        </div>
         <div class="input-group">
           <span class="input-group-text">With textarea</span>
-          <textarea class="form-control" aria-label="With textarea"></textarea>
+          <textarea class="form-control" aria-label="With textarea" th:field="*{contents}"></textarea>
         </div>
         <div class="input-group">
-          <input type="text" class="form-control" aria-label="amount">
-          <span class="input-group-text">원</span>
+          <input type="text" class="form-control" ria-label="amount">
+          <span class="input-group-text" th:field="*{goal}">원</span>
         </div>
-        <div class="input-group mb-3">
-          <input type="file" class="form-control" id="inputGroupFile02 imgfile" name = "imgfile">
-          <label class="input-group-text" for="inputGroupFile02" >Upload</label>
+        <div class="mb-3">
+          <input class="form-control" type="file" id="formFileMultiple imgFile" name="imgFile" multiple>
         </div>  
         <div class="col-12">
-          <button class="btn btn-primary" type="submit">Submit form</button>
+          <button class="btn btn-primary" type="submit">Submit</button>
         </div>
       </form>
     </main>

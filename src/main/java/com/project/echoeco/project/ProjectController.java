@@ -2,6 +2,8 @@ package com.project.echoeco.project;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,19 +24,21 @@ public class ProjectController {
 	@GetMapping("/list")
 	public String projectList(Model model) {
 		List<Project> projectList = projectService.getProjects();
-		model.addAttribute("list", projectList);
+		model.addAttribute("projectList", projectList);
 		return "projectList";
 	}
 
+	// 프로젝트 생성 페이지
 	@GetMapping("/create")
 	public String createProject() {
 		return "projectForm";
 	}
 
+	// 프로젝트 저장
 	@PostMapping("/create")
 	public String saveProject(ProjectDto projectDto, MultipartFile imgFile) throws Exception {
 		projectService.newProject(projectDto, imgFile);
-		return "redirect:/list";
+		return "redirect:/project/list";
 	}
 
 }
