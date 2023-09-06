@@ -1,18 +1,16 @@
 import React from 'react';
-import { Link, useLocation, useSearchParams } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 function Header(props) {
   const location = useLocation;
-  const keywords = useSearchParams;
-  const keyword = useSearchParams.get('search');
   return (
     <>
       <h1>header</h1>
       <ul>
-        <li>{location.fundingList}</li>
-        <li>{location.activityList}</li>
-        <li>{location.boardList}</li>
-        <li>{location.notice}</li>
+        <li>{location.fundingList} crowd funding</li>
+        <li>{location.activityList} crowd activity</li>
+        <li>{location.boardList} 게시판 </li>
+        <li>{location.notice} 공지 </li>
       </ul>
       <form action="search" method="post"></form>
     </>
