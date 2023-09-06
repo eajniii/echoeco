@@ -1,4 +1,4 @@
-package com.project.echoeco.project;
+package com.project.echoeco.funding;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

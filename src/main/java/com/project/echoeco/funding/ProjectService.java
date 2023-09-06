@@ -1,4 +1,4 @@
-package com.project.echoeco.project;
+package com.project.echoeco.funding;
 
 import java.io.File;
 import java.util.List;
