@@ -34,13 +34,13 @@ public class Project {
   private String contents;
 
   private Integer goal;
+  
+  @Enumerated(EnumType.STRING)
+  private ProjectStatus project_status;
 
   private String imgName;
 
   private String imgPath;
-
-  @Enumerated(EnumType.STRING)
-  private ProjectStatus project_status;
 
   @Builder
   public Project(String object, String title, String contents, Integer goal,
