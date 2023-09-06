@@ -25,16 +25,15 @@ public class MemberController {
 		return "signup";
 	}
 
-
 	
 	@PostMapping("/signup")
 	public String failsignup(@Valid MemberDTO memberDTO,BindingResult bindingResult,Model model) {
-		//회원가입 실패 시 , 입력 데이터 유지 (프론트단에서 thymleaf 사용)
+		//회원가입 실패 시 , 입력 데이터 유지 (프론트단에서 에러처리)
 		if(bindingResult.hasErrors()) {
 			model.addAttribute("memberDTO",memberDTO);
 			
 		//유효성 통과 못한 필드 필드와 메세지 핸들링 - 예외 처리 (패스워드 유효성 검사)
-			try {
+		try {
 				Member member = Member.createMember(memberDTO,passwordEncoder);
 				memberService.saveMember(member);
 			}catch(IllegalStateException e) {
@@ -44,6 +43,7 @@ public class MemberController {
 		}
 		return "signup";	
 		}
+	
 	@GetMapping("/login")
 	public String login() {
 		return "login";
