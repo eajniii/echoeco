@@ -1,20 +1,29 @@
 package com.project.echoeco.member;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import common.Role;
+import com.project.echoeco.common.BaseTime;
+import com.project.echoeco.common.constant.Role;
+
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 @Entity
-@Getter
-@Setter
+@SuperBuilder
 @ToString
+@Getter
 @Table(name = "member")
-public class Member {
+public class Member extends BaseTime {
 
 	@Id
 	@Column(name = "member_id")
@@ -34,12 +43,13 @@ public class Member {
 	private Role role;
 
 	public static Member createMember(MemberDTO memberDTO, PasswordEncoder passwordEncoder) {
-		Member member = new Member();
-		member.setName(memberDTO.getName());
-		member.setEmail(memberDTO.getEmail());
-		String password = passwordEncoder.encode(memberDTO.getPassword());
-		member.setPassword(password);
-		member.setRole(Role.MEMBER);
+		Member member = Member.builder()
+				.name(memberDTO.getName())
+				.email(memberDTO.getEmail())
+				.password(passwordEncoder.encode(memberDTO.getPassword()))
+				.tel(memberDTO.getTel())
+				.role(Role.MEMBER)
+				.build();
 		return member;
 	}
 

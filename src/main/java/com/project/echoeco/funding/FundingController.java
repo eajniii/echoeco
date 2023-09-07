@@ -14,14 +14,14 @@ import lombok.RequiredArgsConstructor;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/project")
-public class ProjectController {
+public class FundingController {
 
-  private final ProjectService projectService;
+  private final FundingService projectService;
 
   // 리스트 전체 조회
   @GetMapping("/list")
   public String projectList(Model model) {
-    List<Project> projectList = projectService.getProjects();
+    List<Funding> projectList = projectService.getProjects();
     model.addAttribute("projectList", projectList);
     return "projectList";
   }
@@ -34,7 +34,7 @@ public class ProjectController {
 
   // 프로젝트 저장
   @PostMapping("/create")
-  public String saveProject(ProjectDto projectDto, MultipartFile imgFile) throws Exception {
+  public String saveProject(FundingDto projectDto, MultipartFile imgFile) throws Exception {
     projectService.newProject(projectDto, imgFile);
     return "redirect:/project/list";
   }

@@ -1,4 +1,4 @@
-package com.project.echoeco.funding;
+package com.project.echoeco.common.constant;
 
 public enum ProjectStatus {
   ONGOING, CLOSED

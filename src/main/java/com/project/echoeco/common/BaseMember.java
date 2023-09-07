@@ -1,6 +1,5 @@
-package com.project.echoeco.baseEntity;
+package com.project.echoeco.common;
 
-import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 
@@ -8,15 +7,19 @@ import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-@Entity
+import lombok.Getter;
+import lombok.experimental.SuperBuilder;
+
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public abstract class Base {
+@Getter
+@SuperBuilder
+public abstract class BaseMember extends BaseTime {
 
 	@CreatedBy
 	private String createdEmail;
-	
+
 	@LastModifiedBy
 	private String modifiedEmail;
-	
+
 }
