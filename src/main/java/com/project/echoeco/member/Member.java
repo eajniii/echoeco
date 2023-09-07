@@ -4,25 +4,29 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
-
 import com.project.echoeco.board.Board;
-import com.project.echoeco.common.Role;
+import com.project.echoeco.common.BaseMember;
+import com.project.echoeco.common.constant.Role;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 @Entity
-@Data
+@SuperBuilder
+@ToString
+@Getter
 @Table(name = "member")
-public class Member {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Member{
 
 	@Id
 	@Column(name = "member_id")
@@ -42,14 +46,6 @@ public class Member {
 	@Enumerated(EnumType.STRING)
 	private Role role;
 
-	public static Member createMember(MemberDTO memberDTO, PasswordEncoder passwordEncoder) {
-		Member member = new Member();
-		member.setName(memberDTO.getName());
-		member.setEmail(memberDTO.getEmail());
-		String password = passwordEncoder.encode(memberDTO.getPassword());
-		member.setPassword(password);
-		member.setRole(Role.MEMBER);
-		return member;
-	}
+	
 
 }

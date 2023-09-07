@@ -1,12 +1,18 @@
 package com.project.echoeco.member;
 
-import javax.validation.constraints.*;
+import java.time.LocalDateTime;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@AllArgsConstructor
 public class MemberDTO {
 
 	@Email(message = "이메일 형식에 맞춰 입력해주세요")
@@ -20,15 +26,14 @@ public class MemberDTO {
 	
 	
 	@NotEmpty(message = "이름을 입력해주세요")	
+
+	@NotEmpty(message = "이름을 입력해주세요")
 	private String name;
 	
-//  NotBlank(message = "연락가능한 휴대번호를 - 또는 공백 없이 숫자만 입력해주세요") //null , 빈 문자열 , 스페이스만 포함한 문자열 불가
+	// NotBlank(message = "연락가능한 휴대번호를 - 또는 공백 없이 숫자만 입력해주세요") //null , 빈 문자열 ,
+	// 스페이스만 포함한 문자열 불가
 	private Integer tel;
 	
-	private MemberDTO(String email,String password,String name,Integer tel) {
-		this.email = email;
-		this.password = password;
-		this.name = name;
-		this.tel = tel;
-	}
+	private LocalDateTime created_date;
+
 }

@@ -22,7 +22,7 @@ public class MemberController {
 	
 	@GetMapping("/signup")
 	public String signup(MemberDTO memberDTO) {
-		return "signup";
+		return "member/signup";
 	}
 
 	
@@ -34,19 +34,18 @@ public class MemberController {
 			
 		//유효성 통과 못한 필드 필드와 메세지 핸들링 - 예외 처리 (패스워드 유효성 검사)
 		try {
-				Member member = Member.createMember(memberDTO,passwordEncoder);
-				memberService.saveMember(member);
+				memberService.saveMember(memberDTO, passwordEncoder);
 			}catch(IllegalStateException e) {
 				model.addAttribute("errorMessage",e.getMessage());
 				return "member/memberDTO";
 			}
 		}
-		return "signup";	
+		return "member/signup";	
 		}
 	
 	@GetMapping("/login")
 	public String login() {
-		return "Login";
+		return "member/Login";
 		
 	}
 }
