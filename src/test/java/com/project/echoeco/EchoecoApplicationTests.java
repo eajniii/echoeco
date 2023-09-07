@@ -38,10 +38,11 @@ class EchoecoApplicationTests {
 				.build();
 
 		this.memberRepository.save(m1);
-		
+
 	}
+
 	@Test
-	void testActivity(){
+	void testActivity() {
 		Activity atv;
 		atv = Activity.builder()
 				.contents("안녕하세요")
@@ -50,9 +51,9 @@ class EchoecoApplicationTests {
 				.createdDate(LocalDateTime.now())
 				.createdEmail("ltk2956")
 				.build();
-		System.out.println("들어간 값 확인 : "+atv.getContents());
-		System.out.println("들어간 값 확인 : "+atv.getCreatedEmail());
-		System.out.println("들어간 값 확인 : "+atv.getCurruntCnt());
+		System.out.println("들어간 값 확인 : " + atv.getContents());
+		System.out.println("들어간 값 확인 : " + atv.getCreatedEmail());
+		System.out.println("들어간 값 확인 : " + atv.getCurruntCnt());
 		atvtRepository.save(atv);
 	}
 	
