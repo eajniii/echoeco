@@ -24,11 +24,15 @@ public class SecurityConfig {
 			.headers((headers) -> headers
 					.addHeaderWriter(new XFrameOptionsHeaderWriter(
 							XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN)))
+			//스프링시큐리티의 로그인 부분 담당
+			.formLogin((formLogin) -> formLogin
+			.loginPage("/member/login")
+			.defaultSuccessUrl("/project/list"))
 			;
 		return http.build();
 			
 	}
-	
+	//BCrypt 해싱함수로 패스워드 암호화
 	@Bean
 	PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();

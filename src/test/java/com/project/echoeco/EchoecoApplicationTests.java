@@ -4,10 +4,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.project.echoeco.common.Role;
 import com.project.echoeco.member.Member;
 import com.project.echoeco.member.MemberRepository;
-
-import common.Role;
 
 @SpringBootTest
 class EchoecoApplicationTests {
