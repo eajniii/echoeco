@@ -11,13 +11,13 @@ import javax.persistence.Table;
 import com.project.echoeco.addrEntity.State;
 
 @Entity
-@Table(name="Address")
+@Table(name = "Address")
 public class Activity_State {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer idx;
-	
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
     @ManyToOne
     @JoinColumn(name = "STATE_ID")
     private State state;
@@ -25,5 +25,5 @@ public class Activity_State {
     @ManyToOne
     @JoinColumn(name = "ACTIVITY_ID")
     private Activity activity;
-	
+
 }

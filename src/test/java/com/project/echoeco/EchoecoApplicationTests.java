@@ -2,8 +2,6 @@ package com.project.echoeco;
 
 import java.time.LocalDateTime;
 
-import javax.transaction.Transactional;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -36,10 +34,11 @@ class EchoecoApplicationTests {
 				.build();
 
 		this.memberRepository.save(m1);
-		
+
 	}
+
 	@Test
-	void testActivity(){
+	void testActivity() {
 		Activity atv;
 		atv = Activity.builder()
 				.contents("안녕하세요")
@@ -48,9 +47,9 @@ class EchoecoApplicationTests {
 				.createdDate(LocalDateTime.now())
 				.createdEmail("ltk2956")
 				.build();
-		System.out.println("들어간 값 확인 : "+atv.getContents());
-		System.out.println("들어간 값 확인 : "+atv.getCreatedEmail());
-		System.out.println("들어간 값 확인 : "+atv.getCurruntCnt());
+		System.out.println("들어간 값 확인 : " + atv.getContents());
+		System.out.println("들어간 값 확인 : " + atv.getCreatedEmail());
+		System.out.println("들어간 값 확인 : " + atv.getCurruntCnt());
 		atvtRepository.save(atv);
 	}
 }
