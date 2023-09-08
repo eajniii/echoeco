@@ -10,8 +10,13 @@ import javax.persistence.Table;
 
 import com.project.echoeco.addrEntity.State;
 
+import lombok.Getter;
+import lombok.experimental.SuperBuilder;
+
 @Entity
 @Table(name = "Address")
+@SuperBuilder
+@Getter
 public class Activity_State {
 
     @Id

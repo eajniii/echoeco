@@ -1,5 +1,6 @@
 package com.project.echoeco.activity;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -22,6 +23,8 @@ public class Activity extends BaseProject {
 	
 	private Integer goalCnt;
 
+	private LocalDateTime deadLine;
+	
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "projectImg_id")
 	private List<ProjectImg> activityImg;

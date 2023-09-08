@@ -34,6 +34,7 @@ class EchoecoApplicationTests {
 				.name("패트")
 				.password("1234")
 				.role(Role.ADMIN)
+				.createdDate(LocalDateTime.now())
 				.tel(12345678)
 				.build();
 
