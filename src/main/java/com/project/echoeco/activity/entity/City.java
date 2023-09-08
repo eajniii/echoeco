@@ -1,4 +1,4 @@
-package com.project.echoeco.addrEntity;
+package com.project.echoeco.activity.entity;
 
 import java.util.List;
 

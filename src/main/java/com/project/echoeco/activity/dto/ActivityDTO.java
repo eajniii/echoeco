@@ -1,4 +1,4 @@
-package com.project.echoeco.activity;
+package com.project.echoeco.activity.dto;
 
 import java.io.File;
 import java.time.LocalDateTime;

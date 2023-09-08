@@ -1,4 +1,4 @@
-package com.project.echoeco.activity;
+package com.project.echoeco.activity.entity;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -7,6 +7,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import com.project.echoeco.common.BaseProject;
 import com.project.echoeco.projectImg.ProjectImg;
@@ -28,5 +29,8 @@ public class Activity extends BaseProject {
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "projectImg_id")
 	private List<ProjectImg> activityImg;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	private Activity_State activityState;
 
 }
