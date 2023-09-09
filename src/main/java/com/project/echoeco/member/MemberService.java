@@ -1,6 +1,5 @@
 package com.project.echoeco.member;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -34,8 +33,6 @@ public class MemberService {
 	}
 	
 
-	
-
 	// 중복성 검사 , email 중복인 경우 오류 메세지
 	private void validateDuplicateMember(MemberDTO memberDTO) {
 		Optional<Member> findMember = memberRepository.findByEmail(memberDTO.getEmail());
@@ -44,6 +41,5 @@ public class MemberService {
 		}
 	}
 
-	// //유효성 검사에 실패한 필드 목록 hashmap에 저장
 
 }

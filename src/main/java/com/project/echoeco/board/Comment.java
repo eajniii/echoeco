@@ -28,19 +28,22 @@ public class Comment extends BaseTime{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	//작성자(one) 댓글(many)
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "member_name")
-	private Member member;
-	
+	@Column(columnDefinition = "text")
 	private String content;
+
+	//작성자(one) 댓글(many)
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "member_name")
+//	private Member member;	
 	
-	//create_date -> extends basetime 
+//	basemember - createdby
 	
-	//@JoinColumn 에 해당하는 컬럼은 FK 가 있는 컬럼
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "board_id")
-	private Board board_id; //댓글은 하나의 게시글에 여러 개 달 수 있기 때문에 댓글(many) 게시글(one)
+	private Board board; //댓글은 하나의 게시글에 여러 개 달 수 있기 때문에 댓글(many) 게시글(one)
 	
+	//created_date -> extends basetime 
+	//modified_date -> extends basetime 
 	
 }

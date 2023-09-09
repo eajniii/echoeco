@@ -10,13 +10,17 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class) // application에서 사용 선언 시 적용
 @Getter
 @SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 public abstract class BaseTime {
 
 	@Column(updatable = false) // 처음 새성된 시간은 한번 설정 이후 업데이트하지 않음
