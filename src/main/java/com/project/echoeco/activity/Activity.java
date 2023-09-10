@@ -19,11 +19,11 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @ToString
 public class Activity extends BaseProject {
-	
+
 	private Integer goalCnt;
 
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "projectImg_id")
+	@JoinColumn(name = "projectImgId")
 	private List<ProjectImg> activityImg;
 
 }

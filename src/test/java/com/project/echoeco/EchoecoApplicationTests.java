@@ -26,11 +26,11 @@ class EchoecoApplicationTests {
 	@Test
 	void testJpa() {
 		Member m1 = Member.builder()
-				.email("123@123.com")
-				.name("패트")
+				.email("dew23@weie.com")
 				.password("1234")
 				.role(Role.ADMIN)
 				.tel(12345678)
+				.createdAt(LocalDateTime.now())
 				.build();
 
 		this.memberRepository.save(m1);
@@ -43,13 +43,11 @@ class EchoecoApplicationTests {
 		atv = Activity.builder()
 				.contents("안녕하세요")
 				.curruntCnt(0)
-				.goalCnt(5).project_status(ProjectStatus.ONGOING)
-				.createdDate(LocalDateTime.now())
-				.createdEmail("ltk2956")
+				.goalCnt(5).projectStatus(ProjectStatus.ONGOING)
+				.createdAt(LocalDateTime.now())
+				.createdBy("ltk2956")
 				.build();
-		System.out.println("들어간 값 확인 : " + atv.getContents());
-		System.out.println("들어간 값 확인 : " + atv.getCreatedEmail());
-		System.out.println("들어간 값 확인 : " + atv.getCurruntCnt());
+
 		atvtRepository.save(atv);
 	}
 }

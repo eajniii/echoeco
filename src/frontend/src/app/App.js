@@ -1,11 +1,13 @@
-import React, { Component } from 'react';
-import { Routes, Route } from 'react-router-dom';
-import Header from '../common/Header';
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
 import Footer from '../common/Footer';
-import Main from '../pages/Main';
+import Header from '../common/Header';
 import NotFound from '../common/NotFound';
-import FundingDetails from '../component/funding/FundingDetails';
 import '../css/App.css';
+import Main from '../pages/Main';
+import FundingList from '../pages/funding/FundingList';
+import FundingCreate from '../pages/funding/FundingCreate';
+import FundingDetails from '../pages/funding/FundingDetails';
 
 const App = () => {
   return (
@@ -13,8 +15,17 @@ const App = () => {
       <Header />
       <Routes>
         <Route path="/" element={<Main />}></Route>
+        <Route path="/project/funding/list" element={<FundingList />}></Route>
         <Route
-          path="/project/funding/details/:fundingProjectId"
+          path="/project/funding/create"
+          element={<FundingCreate />}
+        ></Route>
+        <Route
+          path="/project/funding/details/:funding_id"
+          element={<FundingDetails />}
+        ></Route>
+        <Route
+          path="/project/funding/edit/:funding_id"
           element={<FundingDetails />}
         ></Route>
         {/* 없는 페이지 처리 */}

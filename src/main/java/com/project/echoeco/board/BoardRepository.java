@@ -1,8 +1,9 @@
-package com.project.echoeco.funding;
+package com.project.echoeco.board;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface FundingRepository extends JpaRepository<Funding, Integer> {
+public interface BoardRepository extends JpaRepository<Board, Integer> {
+
 }
