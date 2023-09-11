@@ -10,10 +10,10 @@ import lombok.Getter;
 public class CommentDTO {
 
 	@NotNull(message = "내용을 입력해주세요.")
-	private String content;
+	private String contents;
 	
 	public void Comment(CommentDTO commentDTO) {
-		this.content = commentDTO.getContent();
+		this.contents = commentDTO.getContents();
 		
 	}
 }

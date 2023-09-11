@@ -17,6 +17,7 @@ import javax.persistence.Table;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.project.echoeco.comment.Comment;
 import com.project.echoeco.common.BaseMember;
 import com.project.echoeco.member.Member;
 
