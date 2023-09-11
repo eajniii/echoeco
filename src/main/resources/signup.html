@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>회원가입창</title>
+</head>
+<body>
+	<h2>회원가입</h2>
+	
+	<hr>
+	<form th:action="@{/member/signup}" method="post" modelattribute="memberDTO">
+		<div>
+			<input type="text" name="email" th:value="${memberDTO.email}" placeholder="이메일을 입력해주세요">
+		<!-- 에러메세지 뜨는 부분 -->
+		</div>
+		<div>
+			<input type="password" name="password" th:value="${memberDTO.password}" placeholder="비밀번호를 입력해주세요">
+		<!-- 에러메세지 뜨는 부분 -->		
+		</div>
+		<div>
+			<input type="text" name="name" th:value="${memberDTO.name}" placeholder="이름을 입력해주세요">
+		<!-- 에러메세지 뜨는 부분 -->
+		</div>
+		<div>
+			<input type="text" name="tel" th:value="${memberDTO.tel}" placeholder="연락가능한 휴대번호를 입력해주세요">
+		<!-- 에러메세지 뜨는 부분 -->
+		</div>
+		
+		<button>등록</button>
+	</form>
+
+</hr>
+	
+</body>
+</html>
