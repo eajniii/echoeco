@@ -1,0 +1,30 @@
+@font-face {
+  font-family: 'neurimboGothicRegular';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/neurimboGothicRegular.woff2')
+    format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+* {
+  font-family: 'neurimboGothicRegular';
+}
+html {
+  position: relative;
+  min-height: 100%;
+  margin: 0;
+}
+body {
+  min-height: 100%;
+}
+ul {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 auto;
+}
+li {
+  list-style: none;
+}
+a {
+  text-decoration: none;
+  color: black;
+}

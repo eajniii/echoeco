@@ -110,3 +110,8 @@ out/
 
 ### VS Code ###
 .vscode/
+
+/node_module
+/.pnp
+.pnp.js
+.eslintcach

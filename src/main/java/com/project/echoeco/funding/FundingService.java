@@ -1,4 +1,4 @@
-package com.project.echoeco.project;
+package com.project.echoeco.funding;
 
 import java.io.File;
 import java.util.List;
@@ -13,18 +13,18 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class ProjectService {
-  private final ProjectRepository projectRepository;
-  public List<Project> getProjects;
+public class FundingService {
+  private final FundingRepository projectRepository;
+  public List<Funding> getProjects;
 
   @Transactional(readOnly = true)
-  public List<Project> getProjects() {
+  public List<Funding> getProjects() {
 
     return projectRepository.findAll();
 
   }
 
-  public void newProject(ProjectDto projectDto, MultipartFile imgFile) throws Exception {
+  public void newProject(FundingDto projectDto, MultipartFile imgFile) throws Exception {
     String oriImgName = imgFile.getOriginalFilename();
     String imgName = "";
     String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/files";
@@ -36,14 +36,13 @@ public class ProjectService {
     File saveFiles = new File(projectPath, imgName);
     imgFile.transferTo(saveFiles);
 
-    Project project = Project.builder()
+    Funding project = Funding.builder()
         .object(projectDto.getObject())
         .title(projectDto.getTitle())
         .contents(projectDto.getContents())
-        .goal(projectDto.getGoal())
-        .imgName(imgName)
-        .imgPath("/files/" + imgName)
-        .project_status(projectDto.getProject_status())
+        .goalAmount(projectDto.getGoalAmount())
+        // .imgName(imgName)
+        // .imgPath("/files/" + imgName)
         .build();
 
     projectRepository.save(project);

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{baseLayout}">
+
+<head>
+<meta charset="UTF-8">
+<title>회원가입창</title>
+</head>
+<body>
+	<th:block layout:fragment="script"></th:block>
+	<th:block layout:fragment="css"> </th:block>     
+
+	<main layout:fragment="content">
+	<h2>회원가입</h2>
+	<script th:inline = "javascript">
+		$(document).ready(function(){
+			// var errorMessage = [[${errorMessage}]]
+			if(errorMessage != null){
+				alert(erroeMessage);
+			}
+		
+		});
+		
+	</script>
+	<hr>
+	<form th:action="@{/member/signup}" method="post" th:object="${memberDTO}">
+		<div>
+			<label for="email">이름</label>
+			<input type="text" th:field="*{email}" th:value="${memberDTO.email}" placeholder="이메일을 입력해주세요">
+		<!-- 에러메세지 뜨는 부분 -->
+		<p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="fieldError">Incorrect data</p>
+		</div>
+		<div>
+			<label for="password">비밀번호</label>
+			<input type="password" th:field="*{password}" th:value="${memberDTO.password}" placeholder="비밀번호를 입력해주세요">
+		<!-- 에러메세지 뜨는 부분 -->		'
+		<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="fieldError">Incorrect data</p>'
+		</div>
+		<div>
+			<label for="name">이름</label>
+			<input type="text" th:field="*{name}" th:value="${memberDTO.name}" placeholder="이름을 입력해주세요">
+		<!-- 에러메세지 뜨는 부분 -->
+		<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="fieldError">Incorrect data</p>
+		</div>
+		<div>
+			<label for="tel">연락처</label>
+			<input type="text" th:field="*{tel}" th:value="${memberDTO.tel}" placeholder="연락가능한 휴대번호를 입력해주세요">
+		<!-- 에러메세지 뜨는 부분 -->
+		<p th:if="${#fields.hasErrors('tel')}" th:errors="*{tel}" class="fieldError">Incorrect data</p>
+		</div>
+		
+		<button type="submit">회원 가입</button>
+	</form>
+
+</hr>
+	</main>
+</body>
+</html>

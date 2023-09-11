@@ -1,13 +1,14 @@
-package com.project.echoeco.project;
+package com.project.echoeco.funding;
+
+import java.math.BigDecimal;
 
 import javax.validation.constraints.NotBlank;
-
 import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
 
 @Getter
-public class ProjectDto {
+public class FundingDto {
   @NotBlank(message = "프로젝트  목적을 선택하세요.")
   private String object;
 
@@ -18,8 +19,6 @@ public class ProjectDto {
   private String contents;
 
   @NotNull(message = "목표 금액을 입력하세요")
-  private Integer goal;
-
-  private ProjectStatus project_status;
+  private BigDecimal goalAmount;
 
 }
