@@ -1,6 +1,7 @@
 package com.project.echoeco.board;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +21,8 @@ public class BoardController {
   private final CommentService commentService;
 
   @PostMapping("/create")
-  public ResponseEntity<BoardCreateResponse> newBoard(@RequestBody BoardCreateRequest dto) {
+  public ResponseEntity<BoardCreateResponse> newArticle(Authentication authentication,
+      @RequestBody BoardCreateRequest dto) {
     return ResponseEntity.ok().body(boardService.create(dto));
   }
 

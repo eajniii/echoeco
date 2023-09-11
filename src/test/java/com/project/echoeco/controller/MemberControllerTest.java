@@ -5,11 +5,14 @@ import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithAnonymousUser;
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
@@ -18,7 +21,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.echoeco.common.exception.AppException;
 import com.project.echoeco.common.exception.ErrorCode;
-import com.project.echoeco.member.MemberDTO;
+import com.project.echoeco.member.MemberController;
 import com.project.echoeco.member.MemberJoinRequest;
 import com.project.echoeco.member.MemberLoginRequest;
 import com.project.echoeco.member.MemberService;
@@ -29,38 +32,41 @@ public class MemberControllerTest {
   @Autowired
   MockMvc mockMvc;
 
+  @InjectMocks
+  private MemberController memberController;
   @MockBean
-  MemberService memberService;
+  private MemberService memberService;
 
   @Autowired
-  ObjectMapper objectmapper;
+  private ObjectMapper objectmapper = new ObjectMapper();
 
   @Test
-  @DisplayName("회원가입 완료!")
-  public void join() throws Exception {
+  @DisplayName("회원가입 성공")
+  void join() throws Exception {
     String email = "aa@ccc.dd";
     String password = "3241KJ!d";
-    String name = "Jane";
+    String name = "하이";
 
     mockMvc.perform(MockMvcRequestBuilders.post("/members/join")
+        .with(SecurityMockMvcRequestPostProcessors.csrf())
         .contentType(MediaType.APPLICATION_JSON)
         .content(objectmapper.writeValueAsBytes(new MemberJoinRequest(email, password, name))))
         .andDo(MockMvcResultHandlers.print())
         .andExpect(MockMvcResultMatchers.status().isOk());
-
   }
 
   @Test
   @DisplayName("회원가입 실패!")
   public void join_fail() throws Exception {
     String email = "aa@ccc.dd";
-    String name = "Jane";
     String password = "3241KJ!d";
-    Integer tel = 1425323;
+    String name = "인재";
+    Integer tel = 3902211;
 
     mockMvc.perform(MockMvcRequestBuilders.post("/members/join")
+        .with(SecurityMockMvcRequestPostProcessors.csrf())
         .contentType(MediaType.APPLICATION_JSON)
-        .content(objectmapper.writeValueAsBytes(new MemberDTO(email, name, password, tel))))
+        .content(objectmapper.writeValueAsBytes(new MemberLoginRequest(email, password))))
         .andDo(MockMvcResultHandlers.print())
         .andExpect(MockMvcResultMatchers.status().isConflict());
 
@@ -75,14 +81,15 @@ public class MemberControllerTest {
         .thenReturn("token");
 
     mockMvc.perform(MockMvcRequestBuilders.post("/members/login")
+        .with(SecurityMockMvcRequestPostProcessors.csrf())
         .contentType(MediaType.APPLICATION_JSON)
         .content(objectmapper.writeValueAsBytes(new MemberLoginRequest(email, password))))
-        .andDo(MockMvcResultHandlers.print())
-        .andExpect(MockMvcResultMatchers.status().isOk());
+        .andDo(MockMvcResultHandlers.print()).andExpect(MockMvcResultMatchers.status().isOk());
   }
 
   @Test
   @DisplayName("로그인 실패 - email 오류")
+  @WithAnonymousUser
   public void login_fail1() throws Exception {
     String email = "ewof@iwwd.co";
     String password = "wkeo@22";
@@ -90,6 +97,7 @@ public class MemberControllerTest {
         .thenThrow(new AppException(ErrorCode.EMAIL_NOT_FOUND, ""));
 
     mockMvc.perform(MockMvcRequestBuilders.post("/members/login")
+        .with(SecurityMockMvcRequestPostProcessors.csrf())
         .contentType(MediaType.APPLICATION_JSON)
         .content(objectmapper.writeValueAsBytes(new MemberLoginRequest(email, password))))
         .andDo(MockMvcResultHandlers.print())
@@ -105,7 +113,7 @@ public class MemberControllerTest {
         .thenThrow(new AppException(ErrorCode.EMAIL_NOT_FOUND, ""));
 
     mockMvc.perform(MockMvcRequestBuilders.post("/members/login")
-        .with(csrf())
+        .with(SecurityMockMvcRequestPostProcessors.csrf())
         .contentType(MediaType.APPLICATION_JSON)
         .content(objectmapper.writeValueAsBytes(new MemberLoginRequest(email, password))))
         .andDo(MockMvcResultHandlers.print())

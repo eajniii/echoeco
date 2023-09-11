@@ -1,6 +1,7 @@
 package com.project.echoeco.member;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,7 +17,6 @@ import lombok.RequiredArgsConstructor;
 public class MemberController {
 
 	private final MemberService memberService;
-	private final PasswordEncoder passwordEncoder;
 
 	@PostMapping("/join")
 	public ResponseEntity<String> join(@RequestBody MemberJoinRequest dto) {
@@ -48,9 +48,11 @@ public class MemberController {
 	// return "signup";
 	// }
 
-	@GetMapping("/login")
-	public String login() {
-		return "login";
+	@PostMapping("/login")
+	public ResponseEntity<String> login(@RequestBody MemberLoginRequest dto) {
+		String token = memberService.login(dto.getEmail(), dto.getPassword());
+
+		return ResponseEntity.ok().body(token);
 
 	}
 }

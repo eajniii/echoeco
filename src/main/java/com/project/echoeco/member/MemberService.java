@@ -2,12 +2,14 @@ package com.project.echoeco.member;
 
 import java.time.LocalDateTime;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.project.echoeco.common.constant.Role;
 import com.project.echoeco.common.exception.AppException;
 import com.project.echoeco.common.exception.ErrorCode;
+import com.project.echoeco.utils.JwtUtil;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,6 +19,10 @@ public class MemberService {
 
 	private final MemberRepository memberRepository;
 	private final BCryptPasswordEncoder encoder;
+
+	@Value("${jwt.secret}")
+	private String secretkey;
+	private Long expiredTimeMs = 100 * 60 * 60L;
 
 	public Member join(MemberJoinRequest dto) {
 		memberRepository.findByEmail(dto.getEmail())
@@ -40,11 +46,18 @@ public class MemberService {
 	}
 
 	public String login(String email, String password) {
-		memberRepository.findByEmail(email).isPresent(
+		// email 오류
+		Member selectedMember = memberRepository.findByEmail(email)
+				.orElseThrow(() -> new AppException(ErrorCode.EMAIL_NOT_FOUND, "등록되지 않은 계정입니다."));
 
-		);
+		// pw 오류
+		if (!encoder.matches(password, selectedMember.getPassword())) {
+			throw new AppException(ErrorCode.INVALID_PASSWORD, "잘못된 패스워드입니다.");
+		}
 
-		return "hi";
+		String token = JwtUtil.createToken(selectedMember.getEmail(), secretkey, expiredTimeMs);
+
+		return token;
 	}
 	// 회원 정보 저장
 	// public Member saveMember(MemberDTO dto) {
