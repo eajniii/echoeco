@@ -25,8 +25,8 @@ public abstract class BaseTime {
 
 	@Column(updatable = false) // 처음 새성된 시간은 한번 설정 이후 업데이트하지 않음
 	@CreatedDate
-	private LocalDateTime created_date;
+	private LocalDateTime createdAt;
 
 	@LastModifiedDate
-	private LocalDateTime modified_date;
+	private LocalDateTime modifiedAt;
 }

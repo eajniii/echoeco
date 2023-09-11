@@ -11,7 +11,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.project.echoeco.board.Board;
-import com.project.echoeco.common.BaseMember;
 import com.project.echoeco.common.constant.Role;
 
 import lombok.AccessLevel;
@@ -29,8 +28,8 @@ import lombok.experimental.SuperBuilder;
 public class Member{
 
 	@Id
-	@Column(name = "member_id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "memberId")
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // 기본 키 설정
 	private Integer id;
 
 	@Column(unique = true)
@@ -45,7 +44,5 @@ public class Member{
 
 	@Enumerated(EnumType.STRING)
 	private Role role;
-
-	
 
 }

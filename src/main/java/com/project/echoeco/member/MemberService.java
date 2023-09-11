@@ -1,21 +1,45 @@
 package com.project.echoeco.member;
 
-import java.util.Optional;
+import java.time.LocalDateTime;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
+import com.project.echoeco.common.constant.Role;
+import com.project.echoeco.common.exception.AppException;
+import com.project.echoeco.common.exception.ErrorCode;
 
 import com.project.echoeco.common.constant.Role;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class MemberService {
 
 	private final MemberRepository memberRepository;
+	private final BCryptPasswordEncoder encoder;
+
+	public Member join(MemberJoinRequest dto) {
+		memberRepository.findByEmail(dto.getEmail())
+				.ifPresent(member -> {
+					throw new AppException(ErrorCode.MEMBER_DUPLICATED,
+							dto.getEmail() + "는 이미 등록되었습니다.");
+				});
+
+		Member member = Member.builder()
+				.email(dto.getEmail())
+				.name(dto.getName())
+				.password(encoder.encode(dto.getPassword()))
+				.role(Role.MEMBER)
+				.createdAt(LocalDateTime.now())
+				.build();
+
+		Member savedMember = memberRepository.save(member);
+
+		return savedMember;
+
+	}
 
 	// 회원 정보 저장
 	public Member saveMember(MemberDTO memberDTO, PasswordEncoder passwordEncoder) {

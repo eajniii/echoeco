@@ -8,11 +8,12 @@ import javax.validation.constraints.Pattern;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class MemberDTO {
 
 	@Email(message = "이메일 형식에 맞춰 입력해주세요")

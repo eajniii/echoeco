@@ -14,17 +14,19 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.project.echoeco.common.constant.ProjectStatus;
 
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+@SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-@SuperBuilder
-@Getter
 public abstract class BaseProject extends BaseMember {
 
 	@Id
-	@Column(name = "project_id")
+	@Column(name = "projectId")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
@@ -38,6 +40,6 @@ public abstract class BaseProject extends BaseMember {
 	private Integer curruntCnt;
 
 	@Enumerated(EnumType.STRING)
-	private ProjectStatus project_status;
+	private ProjectStatus projectStatus;
 
 }

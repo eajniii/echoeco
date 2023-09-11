@@ -29,11 +29,10 @@ class EchoecoApplicationTests {
 	void testJpa() {
 	
 		Member m1 = Member.builder()
-				.name("패트")
 				.email("123@123.com")
+				.name("패트")
 				.password("1234")
 				.tel(12345678)
-				.role(Role.MEMBER)
 				.build();
 
 		System.out.println(m1.getName());
@@ -51,12 +50,10 @@ class EchoecoApplicationTests {
 				.contents("안녕하세요")
 				.curruntCnt(0)
 				.goalCnt(5).project_status(ProjectStatus.ONGOING)
-				.created_date(LocalDateTime.now())
+				.createdDate(LocalDateTime.now())
 				.createdEmail("ltk2956")
 				.build();
-		System.out.println("들어간 값 확인 : " + atv.getContents());
-		System.out.println("들어간 값 확인 : " + atv.getCreatedEmail());
-		System.out.println("들어간 값 확인 : " + atv.getCurruntCnt());
+
 		atvtRepository.save(atv);
 	}
 }

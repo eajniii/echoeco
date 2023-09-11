@@ -21,9 +21,9 @@ import lombok.experimental.SuperBuilder;
 public abstract class BaseMember extends BaseTime {
 
 	@CreatedBy
-	private String createdEmail;
+	private String createdBy;
 
 	@LastModifiedBy
-	private String modifiedEmail;
+	private String modifiedBy;
 
 }
