@@ -33,7 +33,6 @@ class EchoecoApplicationTests {
 				.email("dew23@weie.com")
 				.password("1234")
 				.role(Role.ADMIN)
-				.createdDate(LocalDateTime.now())
 				.tel(12345678)
 				.createdAt(LocalDateTime.now())
 				.build();
@@ -55,5 +54,5 @@ class EchoecoApplicationTests {
 
 		atvtRepository.save(atv);
 	}
-	
+
 }

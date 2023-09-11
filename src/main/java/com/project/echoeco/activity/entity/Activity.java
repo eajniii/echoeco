@@ -12,24 +12,28 @@ import javax.persistence.OneToOne;
 import com.project.echoeco.common.BaseProject;
 import com.project.echoeco.projectImg.ProjectImg;
 
-import groovy.transform.ToString;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @Entity
 @SuperBuilder
 @Getter
 @ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class Activity extends BaseProject {
 
 	private Integer goalCnt;
 
 	private LocalDateTime deadLine;
-	
+
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "projectImgId")
 	private List<ProjectImg> activityImg;
-	
+
 	@OneToOne(cascade = CascadeType.ALL)
 	private Activity_State activityState;
 

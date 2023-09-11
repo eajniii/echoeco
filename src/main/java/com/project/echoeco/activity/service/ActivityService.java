@@ -34,78 +34,81 @@ public class ActivityService {
 
 		return this.activityRepository.findAll();
 	}
-	public Optional<Activity> findById(Integer id) throws Exception{
+
+	public Optional<Activity> findById(Integer id) throws Exception {
 		Optional<Activity> activity = this.activityRepository.findById(id);
-		if(!activity.isEmpty()) {
+		if (!activity.isEmpty()) {
 			return this.activityRepository.findById(id);
-		}else {
+		} else {
 			throw new NullPointerException("현제 삭제된 페이지 입니다.");
 		}
-		
+
 	}
-	//프로젝트 수정하기
-	public void modifyProject(ActivityDTO dto,Integer idx,String email) throws Exception {
+
+	// 프로젝트 수정하기
+	public void modifyProject(ActivityDTO dto, Integer idx, String email) throws Exception {
 		Optional<Activity> _activity = this.activityRepository.findById(idx);
-		if(!_activity.isEmpty()) {
+		if (!_activity.isEmpty()) {
 			Activity activity = _activity.get();
-			if(email.equals(activity.getCreatedEmail())) {
-				activity.builder()
-				.modifiedDate(LocalDateTime.now())
-				.modifiedEmail(email)
-				.deadLine(dto.getDeadLine())
-				.title(dto.getTitle())
-				.contents(dto.getContent())
-				.build();
-			}else {
+			if (email.equals(activity.getCreatedBy())) {
+				Activity.builder()
+						.modifiedAt(LocalDateTime.now())
+						.modifiedBy(email)
+						.deadLine(dto.getDeadLine())
+						.title(dto.getTitle())
+						.contents(dto.getContent())
+						.build();
+			} else {
 				throw new AccessDeniedException("접근권한이 없습니다.");
 			}
 		}
 	}
-	
-	//프로젝트 생성하기
+
+	// 프로젝트 생성하기
 	public void createProject(ActivityDTO dto, String email) {
-		Activity activity  = Activity.builder()
+		Activity activity = Activity.builder()
 				.contents(dto.getContent())
-				.createdDate(LocalDateTime.now())
+				.createdAt(LocalDateTime.now())
 				.goalCnt(dto.getGoalCnt())
 				.object(dto.getObject())
-				.project_status(ProjectStatus.ONGOING)
-				.createdEmail(email)
+				.projectStatus(ProjectStatus.ONGOING)
+				.createdBy(email)
 				.deadLine(dto.getDeadLine())
 				.build();
 		this.activityRepository.save(activity);
 		State state = this.stateRepository.findByState(dto.getState());
 		Activity_State as = Activity_State.builder().activity(activity).state(state).build();
 	}
-	//신청하기
+
+	// 신청하기
 	public void participate(Integer activity_idx, Integer member_idx) throws Exception {
 
 		Optional<Activity> _activity = this.activityRepository.findById(activity_idx);
 		Optional<Member> _member = this.memberRepository.findById(member_idx);
-		if (!_activity.isEmpty()&&!_member.isEmpty()) {
+		if (!_activity.isEmpty() && !_member.isEmpty()) {
 			Activity activity = _activity.get();
 			Member member = _member.get();
-			if(activity.getCurruntCnt() >= activity.getGoalCnt()) {
-				activity.builder().project_status(ProjectStatus.CLOSED).build();
+			if (activity.getCurruntCnt() >= activity.getGoalCnt()) {
+				activity.builder().projectStatus(ProjectStatus.CLOSED).build();
 				this.activityRepository.save(activity);
 				throw new Exception("정원 초과 하였습니다.");
-				
-			}else {
-				Activity_Member participate= Activity_Member
+
+			} else {
+				Activity_Member participate = Activity_Member
 						.builder()
 						.activity(activity)
 						.member(member)
 						.build();
-				this.participateRepository.save(participate);	
+				this.participateRepository.save(participate);
 			}
-		}else {
+		} else {
 			throw new Exception("다시 시도해 주세요");
 		}
 	}
-	//삭제하기
+
+	// 삭제하기
 	public void deleteActivity(String email, Integer activity_idx) {
-		
+
 	}
-	
 
 }

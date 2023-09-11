@@ -11,8 +11,8 @@ import javax.persistence.OneToMany;
 import com.project.echoeco.common.BaseProject;
 import com.project.echoeco.projectImg.ProjectImg;
 
-import groovy.transform.ToString;
 import lombok.Getter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @Entity
