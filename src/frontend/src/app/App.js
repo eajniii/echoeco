@@ -5,6 +5,7 @@ import Header from '../common/Header';
 import NotFound from '../common/NotFound';
 import '../css/App.css';
 import Main from '../pages/Main';
+import Join from '../pages/Join';
 import FundingList from '../pages/funding/FundingList';
 import FundingCreate from '../pages/funding/FundingCreate';
 import FundingDetails from '../pages/funding/FundingDetails';
@@ -15,6 +16,7 @@ const App = () => {
       <Header />
       <Routes>
         <Route path="/" element={<Main />}></Route>
+        <Route path="/join" element={<Join />}></Route>
         <Route path="/project/funding/list" element={<FundingList />}></Route>
         <Route
           path="/project/funding/create"
