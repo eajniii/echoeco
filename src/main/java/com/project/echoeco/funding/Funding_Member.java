@@ -1,31 +1,39 @@
-package com.project.echoeco.funding;
+// package com.project.echoeco.funding;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+// import java.util.List;
 
-import com.project.echoeco.member.Member;
+// import javax.persistence.Column;
+// import javax.persistence.Entity;
+// import javax.persistence.GeneratedValue;
+// import javax.persistence.GenerationType;
+// import javax.persistence.Id;
+// import javax.persistence.JoinColumn;
+// import javax.persistence.ManyToOne;
+// import javax.persistence.Table;
 
-@Entity
-@Table(name = "FD_PARTICIPANTS")
-public class Funding_Member {
+// import com.project.echoeco.common.BaseMember;
+// import com.project.echoeco.member.Member;
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "FD_MEMBER_ID")
-  private Integer id;
+// import groovy.transform.ToString;
+// import lombok.experimental.SuperBuilder;
 
-  @ManyToOne
-  @JoinColumn(name = "MEMBER_ID")
-  private Member member;
+// @Entity
+// @SuperBuilder
+// @ToString
+// @Table(name = "FD_PARTICIPANTS")
+// public class Funding_Member extends BaseMember {
 
-  @ManyToOne
-  @JoinColumn(name = "ACTIVITY_ID")
-  private Funding funding;
+// @Id
+// @GeneratedValue(strategy = GenerationType.AUTO)
+// @Column(name = "FD_MemberId")
+// private Integer id;
 
-}
+// @ManyToOne
+// @JoinColumn(name = "memberId")
+// private List<Member> participants;
+
+// @ManyToOne
+// @JoinColumn(name = "fundingId")
+// private Funding funding;
+
+// }

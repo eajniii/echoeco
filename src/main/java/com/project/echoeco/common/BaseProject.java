@@ -17,28 +17,30 @@ import com.project.echoeco.common.constant.ProjectStatus;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 
-@MappedSuperclass
-@EntityListeners(AuditingEntityListener.class)
 @SuperBuilder
 @Getter
+@MappedSuperclass
+@EntityListeners(AuditingEntityListener.class)
 public abstract class BaseProject extends BaseMember {
 
 	@Id
-	@Column(name = "project_id")
+	@Column(name = "projectId")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-
+	@Column
 	private String object;
 
+	@Column
 	private String title;
 
 	@Lob
 	private String contents;
 
+	@Column
 	private Integer curruntCnt;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name = "project_status")
-	private ProjectStatus project_status;
+	@Column(name = "projectStatus")
+	private ProjectStatus projectStatus;
 
 }
