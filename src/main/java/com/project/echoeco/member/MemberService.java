@@ -39,6 +39,13 @@ public class MemberService {
 
 	}
 
+	public String login(String email, String password) {
+		memberRepository.findByEmail(email).isPresent(
+
+		);
+
+		return "hi";
+	}
 	// 회원 정보 저장
 	// public Member saveMember(MemberDTO dto) {
 	// validateDuplicateMember(dto);

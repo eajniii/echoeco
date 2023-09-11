@@ -9,7 +9,9 @@ import lombok.Getter;
 @Getter
 public enum ErrorCode {
 
-  MEMBER_DUPLICATED(HttpStatus.CONFLICT, "");
+  MEMBER_DUPLICATED(HttpStatus.CONFLICT, ""),
+  EMAIL_NOT_FOUND(HttpStatus.NOT_FOUND, ""),
+  INVALID_PASSWORD(HttpStatus.UNAUTHORIZED, "");
 
   private HttpStatus httpStatus;
   private String message;
