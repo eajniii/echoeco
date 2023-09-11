@@ -21,7 +21,6 @@ import com.project.echoeco.common.BaseMember;
 import com.project.echoeco.member.Member;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -44,7 +43,7 @@ public class Board extends BaseMember{
 	private String title;
 		
 	@Column(columnDefinition = "text")
-	private String content;
+	private String contents;
 	
 //  basemember - createdby //작성자
 	@ManyToOne(fetch = FetchType.LAZY)

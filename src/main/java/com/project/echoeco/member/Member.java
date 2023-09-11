@@ -11,6 +11,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.project.echoeco.board.Board;
+import com.project.echoeco.common.BaseMember;
 import com.project.echoeco.common.constant.Role;
 
 import lombok.AccessLevel;
@@ -26,7 +27,7 @@ import lombok.experimental.SuperBuilder;
 @Table(name = "member")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 
-public class Member{
+public class Member extends BaseMember{
 
 	@Id
 	@Column(name = "memberId")

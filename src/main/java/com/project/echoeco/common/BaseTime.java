@@ -1,4 +1,4 @@
-dpackage com.project.echoeco.common;
+package com.project.echoeco.common;
 
 import java.time.LocalDateTime;
 
