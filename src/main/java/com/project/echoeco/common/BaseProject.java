@@ -40,6 +40,7 @@ public abstract class BaseProject extends BaseMember {
 	private Integer curruntCnt;
 
 	@Enumerated(EnumType.STRING)
+	@Column(name = "projectStatus")
 	private ProjectStatus projectStatus;
 
 }
