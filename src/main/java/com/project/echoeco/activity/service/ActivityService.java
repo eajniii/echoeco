@@ -34,14 +34,10 @@ public class ActivityService {
 
 		return this.activityRepository.findAll();
 	}
+	
 	public Optional<Activity> findById(Integer id) throws Exception{
 		Optional<Activity> activity = this.activityRepository.findById(id);
-		if(!activity.isEmpty()) {
-			return this.activityRepository.findById(id);
-		}else {
-			throw new NullPointerException("현제 삭제된 페이지 입니다.");
-		}
-		
+		return this.activityRepository.findById(id);
 	}
 	//프로젝트 수정하기
 	public void modifyProject(ActivityDTO dto,Integer idx,String email) throws Exception {
@@ -74,6 +70,7 @@ public class ActivityService {
 				.deadLine(dto.getDeadLine())
 				.build();
 		this.activityRepository.save(activity);
+		
 		State state = this.stateRepository.findByState(dto.getState());
 		Activity_State as = Activity_State.builder().activity(activity).state(state).build();
 	}
