@@ -19,16 +19,17 @@ public class MemberService {
 	private final BCryptPasswordEncoder encoder;
 
 	public Member join(MemberJoinRequest dto) {
-		memberRepository.findByEmail(dto.getEmail())
-				.ifPresent(member -> {
-					throw new AppException(ErrorCode.MEMBER_DUPLICATED,
-							dto.getEmail() + "는 이미 등록되었습니다.");
-				});
+		// memberRepository.findByEmail(dto.getEmail())
+		// .ifPresent(member -> {
+		// throw new AppException(ErrorCode.MEMBER_DUPLICATED,
+		// dto.getEmail() + "는 이미 등록되었습니다.");
+		// });
 
 		Member member = Member.builder()
 				.email(dto.getEmail())
 				.name(dto.getName())
 				.password(encoder.encode(dto.getPassword()))
+				.tel(dto.getTel())
 				.role(Role.MEMBER)
 				.createdAt(LocalDateTime.now())
 				.build();
@@ -40,9 +41,9 @@ public class MemberService {
 	}
 
 	public String login(String email, String password) {
-		memberRepository.findByEmail(email).isPresent(
+		// memberRepository.findByEmail(email).isPresent(
 
-		);
+		// );
 
 		return "hi";
 	}

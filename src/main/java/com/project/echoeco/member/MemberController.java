@@ -1,7 +1,12 @@
 package com.project.echoeco.member;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,15 +23,10 @@ public class MemberController {
 	private final MemberService memberService;
 	private final PasswordEncoder passwordEncoder;
 
-	@PostMapping("/join")
+	@PostMapping("/signup")
 	public ResponseEntity<String> join(@RequestBody MemberJoinRequest dto) {
 		memberService.join(dto);
 		return ResponseEntity.ok().body("회원가입 완료!");
-	}
-
-	@GetMapping("/signup")
-	public String signup(MemberDTO memberDTO) {
-		return "signup";
 	}
 
 	// @PostMapping("/signup")
@@ -48,9 +48,20 @@ public class MemberController {
 	// return "signup";
 	// }
 
-	@GetMapping("/login")
-	public String login() {
-		return "login";
+	@GetMapping("/signup")
+	public String signupView() {
+		return "signup";
+	}
 
+	@GetMapping("/login")
+	public String loginView() {
+		return "login";
+	}
+
+	@GetMapping("/logout")
+	public String logout(HttpServletRequest request, HttpServletResponse response) {
+		new SecurityContextLogoutHandler().logout(request, response,
+				SecurityContextHolder.getContext().getAuthentication());
+		return "redirect:/";
 	}
 }
