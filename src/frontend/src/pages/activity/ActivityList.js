@@ -1,14 +1,12 @@
 import axios from 'axios';
-import React, { Component, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 
 const ActivityList = () => {
-  const [activities, setActivity] = useState([]);
-  const [keyword, setKeyWord] = useState(``);
+  const [keyword, setKeyword] = useState('');
   const [page, setPage] = useState(0);
   const [area, setArea] = useState([]);
-  const [state, setState] = useState(``);
-  const [selectCity, setSelectCity] = useState(``);
+  const [state, setState] = useState('');
+  const [selectCity, setSelectCity] = useState('');
 
   const options = [
     '서울',
@@ -24,42 +22,31 @@ const ActivityList = () => {
     '경남',
     '제주'
   ];
-  const cityChange = e => {
+
+  const cityChange = (e) => {
     setSelectCity(e.target.value);
     console.log(e.target.value);
     axios
-      .get(`http://localhost:8080/city?city=${selectCity}`)
-      .then(response => {
+      .get(`http://localhost:8080/city`, { params: { city: e.target.value } })
+      .then((response) => {
         console.log(response.data);
         setArea(response.data.content);
       });
   };
-  const stateChange = e => {
+
+  const stateChange = (e) => {
     console.log(e.target.value);
     setState(e.target.value);
   };
-  // useEffect(() => {
-  //   fetchActivity();
-  // }, [page, keyword, state]);
 
-  const onChangeInput = e => {
-    setKeyWord(e.target.value);
+  const onChangeInput = (e) => {
+    setKeyword(e.target.value);
   };
 
-  const fetchActivity = () => {
-    // const url = `/activity/?page=${page}&keyWord=${keyword}&state=${state}`;
-    // axios
-    //   .get(url)
-    //   .then(response => {
-    //     setActivity(response.date.content);
-    //   })
-    //   .catch(error => {
-    //     console.error('Error fetching activities:', error);
-    //   });
-  };
-  const handlePageChange = nextpage => {
+  const handlePageChange = (nextpage) => {
     setPage(nextpage);
   };
+
   return (
     <div>
       <form>
@@ -71,17 +58,17 @@ const ActivityList = () => {
         />
         <select value={selectCity} onChange={cityChange}>
           <option value=""></option>
-          {options.map(option => (
+          {options.map((option) => (
             <option key={option} value={option}>
               {option}
             </option>
           ))}
         </select>
-        <select value={area} onChange={stateChange}>
+        <select value={state} onChange={stateChange}>
           <option value=""></option>
-          {area.map(area => (
-            <option key={area.state} value={area.state}>
-              {area.state}
+          {area.map((areaItem) => (
+            <option key={areaItem.state} value={areaItem.state}>
+              {areaItem.state}
             </option>
           ))}
         </select>
@@ -89,7 +76,7 @@ const ActivityList = () => {
       </form>
       <div>
         {/* {activities.map(activity => (
-          <Link to="activity/detail/{activity.idx}"></Link>
+          <Link to={`activity/detail/${activity.idx}`}></Link>
         ))} */}
       </div>
     </div>

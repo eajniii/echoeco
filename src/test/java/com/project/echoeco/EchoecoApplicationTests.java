@@ -59,7 +59,7 @@ class EchoecoApplicationTests {
 //
 //		atvtRepository.save(atv);
 //	}
-
+//
 //	@Test
 //	void testCityAndState() {
 //		String[] cityList={"서울","경기","인천","강원","충북","충남","대전","전북","전남","경북","경남","제주"};
@@ -89,6 +89,8 @@ class EchoecoApplicationTests {
 	@Test
 	void getStateAndCity() {
 		List<City> city = this.cityRepository.findAll();
-		System.out.println(city.toString());
+		for(City _city : city) {
+			System.out.println(_city.getCity());
+		}
 	}
 }

@@ -13,10 +13,8 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @RequiredArgsConstructor
-@Slf4j
 public class JwtFilter extends OncePerRequestFilter {
   // authorization 헤더값에 담긴 토큰 유효성 확인
 

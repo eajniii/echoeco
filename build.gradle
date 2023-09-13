@@ -61,10 +61,6 @@ dependencies {
 	implementation 'org.apache.commons:commons-lang3:3.12.0'
 }
 
-tasks.named('test') {
-	useJUnitPlatform()
-}
-
 def webappDir = "$projectDir/src/main/frontend"
 
 sourceSets {
@@ -102,4 +98,7 @@ task installReact(type: Exec) {
 		commandLine "npm", "audit", "fix"
 		commandLine 'npm', 'install'
 	}
+}
+tasks.named('test') {
+	useJUnitPlatform()
 }

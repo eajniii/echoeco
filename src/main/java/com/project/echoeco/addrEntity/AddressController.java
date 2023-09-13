@@ -23,10 +23,10 @@ public class AddressController {
 	@GetMapping("/city")
 	public ResponseEntity<String> getStateListByCity(@RequestParam("city") String city){
 		System.out.println(city);
-//		List<State> state = this.addressService.returnstate(city);
-//		for (State _state: state) {
-//			System.out.print(_state.getState()+" ");
-//		}
+		List<State> state = this.addressService.returnstate(city);
+		for (State _state: state) {
+			System.out.print(_state.getState()+" ");
+		}
 		
 		return ResponseEntity.ok().body("처리되었습니다.");
 	}
