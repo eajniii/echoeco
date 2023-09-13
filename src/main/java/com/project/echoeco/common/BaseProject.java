@@ -29,17 +29,20 @@ public abstract class BaseProject extends BaseMember {
 	@Column(name = "projectId")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-
+	@Column
 	private String object;
 
+	@Column
 	private String title;
 
 	@Lob
 	private String contents;
 
+	@Column
 	private Integer curruntCnt;
 
 	@Enumerated(EnumType.STRING)
+	@Column(name = "projectStatus")
 	private ProjectStatus projectStatus;
 
 }

@@ -1,4 +1,5 @@
-package com.project.echoeco.activity;
+package com.project.echoeco.activity.entity;
+
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,8 +12,13 @@ import javax.persistence.Table;
 
 import com.project.echoeco.member.Member;
 
+import lombok.Getter;
+import lombok.experimental.SuperBuilder;
+
 @Entity
 @Table(name = "ATVT_PARTICIPANTS")
+@SuperBuilder
+@Getter
 public class Activity_Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,4 +32,7 @@ public class Activity_Member {
     @ManyToOne
     @JoinColumn(name = "ACTIVITY_ID")
     private Activity activity;
+    
+    //실제 참여 여부
+    private String YorN;
 }
