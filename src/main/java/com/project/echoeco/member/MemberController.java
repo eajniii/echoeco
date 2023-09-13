@@ -1,6 +1,7 @@
 package com.project.echoeco.member;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @RequestMapping("/member")
 @Slf4j
+@CrossOrigin(originPatterns = "http://localhost:3000")
 public class MemberController {
   private final MemberService memberService;
 
@@ -32,7 +34,7 @@ public class MemberController {
     return ResponseEntity.ok(memberService.changeMemberNickname(dto.getEmail(), dto.getName()));
   }
 
-  @PostMapping("/modify/nickname")
+  @PostMapping("/modify/password")
   public ResponseEntity<MemberInfoResponse> changePassword(@RequestBody PasswordChangeRequest dto) {
     return ResponseEntity
         .ok(memberService.changeMemberPassword(dto.getEmail(), dto.getExPassword(), dto.getNewPassword()));

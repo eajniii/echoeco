@@ -8,7 +8,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.project.echoeco.activity.entity.Activity;
-import com.project.echoeco.activity.entity.City;
 import com.project.echoeco.activity.repository.ActivityRepository;
 import com.project.echoeco.addrEntity.CityRepository;
 import com.project.echoeco.common.constant.ProjectStatus;
