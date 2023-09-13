@@ -1,56 +1,40 @@
 package com.project.echoeco.member;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.echoeco.member.auth.PasswordChangeRequest;
+
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@RequestMapping("/members")
 @RequiredArgsConstructor
+@RequestMapping("/member")
+@Slf4j
 public class MemberController {
+  private final MemberService memberService;
 
-	private final MemberService memberService;
-	private final PasswordEncoder passwordEncoder;
+  @GetMapping("/mypage")
+  public ResponseEntity<MemberInfoResponse> getMemberInfo() {
+    MemberInfoResponse mypageBySecurity = memberService.getMypageBySecurity();
+    log.info(mypageBySecurity.getNickname());
 
-	@PostMapping("/join")
-	public ResponseEntity<String> join(@RequestBody MemberJoinRequest dto) {
-		memberService.join(dto);
-		return ResponseEntity.ok().body("회원가입 완료!");
-	}
+    return ResponseEntity.ok(memberService.getMypageBySecurity());
+  }
 
-	@GetMapping("/signup")
-	public String signup(MemberDTO memberDTO) {
-		return "signup";
-	}
+  @PostMapping("/modify/nickname")
+  public ResponseEntity<MemberInfoResponse> changeNickname(@RequestBody MemberJoinRequest dto) {
+    return ResponseEntity.ok(memberService.changeMemberNickname(dto.getEmail(), dto.getName()));
+  }
 
-	// @PostMapping("/signup")
-	// public String failsignup(@Valid MemberDTO memberDTO, BindingResult
-	// bindingResult, Model model) {
-	// // 회원가입 실패 시 , 입력 데이터 유지 (프론트단에서 thymleaf 사용)
-	// if (bindingResult.hasErrors()) {
-	// model.addAttribute("memberDTO", memberDTO);
-
-	// // 유효성 통과 못한 필드 필드와 메세지 핸들링 - 예외 처리 (패스워드 유효성 검사)
-	// try {
-	// Member member = Member.createMember(memberDTO, passwordEncoder);
-	// memberService.saveMember(member);
-	// } catch (IllegalStateException e) {
-	// model.addAttribute("errorMessage", e.getMessage());
-	// return "member/memberDTO";
-	// }
-	// }
-	// return "signup";
-	// }
-
-	@GetMapping("/login")
-	public String login() {
-		return "login";
-
-	}
+  @PostMapping("/modify/nickname")
+  public ResponseEntity<MemberInfoResponse> changePassword(@RequestBody PasswordChangeRequest dto) {
+    return ResponseEntity
+        .ok(memberService.changeMemberPassword(dto.getEmail(), dto.getExPassword(), dto.getNewPassword()));
+  }
 }

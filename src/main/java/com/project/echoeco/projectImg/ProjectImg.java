@@ -24,14 +24,14 @@ public class ProjectImg {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "projectImgId")
-	private String id;
-
-	// 대표이미지 설정
-	private String YorN;
-
-	private String imgurl;
-	
-	@ManyToOne
-	private Funding funding;
+	private Integer id;
+//
+//	// 대표이미지 설정
+//	private String YorN;
+//
+//	private String imgurl;
+////	
+//	@ManyToOne
+//	private Funding funding;
 	
 }

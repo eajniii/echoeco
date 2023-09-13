@@ -6,5 +6,10 @@
   "bracketSpacing": true,
   "semi": true,
   "arrowParens": "avoid",
+<<<<<<< HEAD
   "endOfLine": "auto" 
 }
+=======
+  "endOfLine": "lf"
+}
+>>>>>>> e06b2ba6456df419319f518368f7f4e4f6db228c

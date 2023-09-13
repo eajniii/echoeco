@@ -96,7 +96,7 @@ public class ActivityService {
 	}
 
 	// 신청하기
-	public void participate(Integer activity_idx, Integer member_idx) throws Exception {
+	public void participate(Integer activity_idx, Long member_idx) throws Exception {
 
 		Optional<Activity> _activity = this.activityRepository.findById(activity_idx);
 		Optional<Member> _member = this.memberRepository.findById(member_idx);

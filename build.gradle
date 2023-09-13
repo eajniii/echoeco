@@ -36,22 +36,23 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 
-//implementation 'mysql:mysql-connector-java'
+	//implementation 'mysql:mysql-connector-java'
 	runtimeOnly 'com.h2database:h2'
 
 	testImplementation 'io.projectreactor:reactor-test'
-//	implementation 'org.springframework:spring-webmvc'
-
-implementation 'io.jsonwebtoken:jjwt:0.9.1'
-implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
+	//implementation 'org.springframework:spring-webmvc'
 
 
+	implementation 'javax.xml.bind:jaxb-api:2.3.1'
+	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.2'
+	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.2'
+	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.2'
 	//json 처리	
 	implementation 'com.fasterxml.jackson.core:jackson-databind'
 	// implementation group: 'org.springframework.boot', name: 'spring-boot-starter-json'
 	// implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5'
 
-	implementation 'javax.xml.bind:jaxb-api:2.3.0'
+	
 	//jUnit
 	// testImplementation 'org.junit.jupiter:junit-jupiter-api'
 	// testImplementation 'org.junit.jupiter:junit-jupiter-engine'
@@ -62,4 +63,43 @@ implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+def webappDir = "$projectDir/src/main/frontend"
+
+sourceSets {
+	main {
+		resources {
+			srcDirs = ["$webappDir/build", "$projectDir/src/main/resources"]
+		}
+	}
+}
+
+processResources {
+	dependsOn "buildReact"
+}
+
+task buildReact(type: Exec) {
+	dependsOn "installReact"
+	workingDir "$webappDir"
+	inputs.dir "$webappDir"
+	group = BasePlugin.BUILD_GROUP
+		if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
+			commandLine "npm.cmd", "run-script", "build"
+		} else {
+			commandLine "npm", "run-script", "build"
+		}
+}
+
+task installReact(type: Exec) {
+	workingDir "$webappDir"
+	inputs.dir "$webappDir"
+	group = BasePlugin.BUILD_GROUP
+	if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
+		commandLine "npm.cmd", "audit", "fix"
+		commandLine 'npm.cmd', 'install'
+	} else {
+		commandLine "npm", "audit", "fix"
+		commandLine 'npm', 'install'
+	}
 }

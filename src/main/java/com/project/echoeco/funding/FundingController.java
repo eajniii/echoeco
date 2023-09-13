@@ -13,9 +13,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin(originPatterns = "http://localhost:3000")
 @RequiredArgsConstructor
-@RequestMapping("/project/funding")
+@RequestMapping("/fundings")
 @Slf4j
 public class FundingController {
 
@@ -37,7 +37,7 @@ public class FundingController {
 
   // 프로젝트 저장
   @PostMapping("/create")
-  public String saveProject(FundingDto projectDto, MultipartFile imgFile) throws Exception {
+  public String saveProject(FundingCreateRequest projectDto, MultipartFile imgFile) throws Exception {
     projectService.newProject(projectDto, imgFile);
     return "redirect:/project/list";
   }
