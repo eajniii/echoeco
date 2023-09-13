@@ -32,20 +32,21 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Table(name = "member")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class Member extends BaseTime implements UserDetails {
 
 	@Id
 	@Column(name = "memberId")
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // 기본 키 설정
-	private Integer id;
+	private Long id;
 
 	@Column(unique = true)
 	private String email;
 
 	private String password;
 
-	private String name;
+	@Column(unique = true)
+	private String nickname;
 
 	private Integer tel;
 
@@ -86,4 +87,15 @@ public class Member extends BaseTime implements UserDetails {
 		// 계정 사용 가능 여부
 		return true;
 	}
+
+	// 닉네임 변경
+	public void modifyNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	// 비밀번호 변경
+	public void modifyPassword(String password) {
+		this.password = password;
+	}
+
 }
