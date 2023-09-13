@@ -32,9 +32,5 @@ public class SecurityConfig {
 		return http.build();
 			
 	}
-	//BCrypt 해싱함수로 패스워드 암호화
-	@Bean
-	PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+
 }

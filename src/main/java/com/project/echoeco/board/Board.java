@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -36,13 +37,14 @@ import lombok.experimental.SuperBuilder;
 public class Board extends BaseMember{
 
 	@Id
-	@Column(name = "board_id")
+	@Column(name = "boardId")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
 	@Column(length = 500)
 	private String title;
 		
+	@Lob
 	@Column(columnDefinition = "text")
 	private String contents;
 	
@@ -57,5 +59,13 @@ public class Board extends BaseMember{
 	@OneToMany(mappedBy = "board",cascade = CascadeType.REMOVE)
 	private List<Comment> comment; 
 	
-
+    public BoardEdit.BoardEditBuilder toEditor() {
+        return BoardEdit.builder()
+                .contents(contents);
+    }
+    
+    public void edit(BoardEdit boardEdit) {
+    	contents = boardEdit.getContents();
+    }
+    
 }
