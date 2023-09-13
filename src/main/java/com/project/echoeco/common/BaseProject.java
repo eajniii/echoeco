@@ -14,13 +14,17 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.project.echoeco.common.constant.ProjectStatus;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @SuperBuilder
 @Getter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
+@NoArgsConstructor
+@AllArgsConstructor
 public abstract class BaseProject extends BaseMember {
 
 	@Id

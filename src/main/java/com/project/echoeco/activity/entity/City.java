@@ -9,16 +9,18 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import lombok.Data;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Data
+@SuperBuilder
 public class City {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idx;
 	
-	private String City;
+	private String city;
 	
 	@OneToMany
 	private List<State> states;

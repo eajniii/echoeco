@@ -8,6 +8,9 @@ import Main from '../pages/Main';
 import FundingList from '../pages/funding/FundingList';
 import FundingCreate from '../pages/funding/FundingCreate';
 import FundingDetails from '../pages/funding/FundingDetails';
+import ActivityDetail from '../pages/activity/ActivityDetail';
+import ActivityList from '../pages/activity/ActivityList';
+import ActivityCreate from '../pages/activity/ActivityCreate';
 
 const App = () => {
   return (
@@ -28,6 +31,12 @@ const App = () => {
           path="/project/funding/edit/:funding_id"
           element={<FundingDetails />}
         ></Route>
+        <Route
+          path="/activity/detail/:activity_id"
+          element={<ActivityDetail />}
+        ></Route>
+        <Route path="/activity" element={<ActivityList />}></Route>
+        <Route path="/activity/create" element={<ActivityCreate />}></Route>
         {/* 없는 페이지 처리 */}
         <Route path="*" element={<NotFound />}></Route>
       </Routes>

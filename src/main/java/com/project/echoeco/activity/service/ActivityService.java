@@ -2,9 +2,14 @@ package com.project.echoeco.activity.service;
 
 import java.nio.file.AccessDeniedException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.project.echoeco.activity.dto.ActivityDTO;
@@ -14,6 +19,7 @@ import com.project.echoeco.activity.entity.Activity_State;
 import com.project.echoeco.activity.entity.State;
 import com.project.echoeco.activity.repository.ATVT_ParticipantsRepository;
 import com.project.echoeco.activity.repository.ActivityRepository;
+import com.project.echoeco.activity.repository.AddressRepository;
 import com.project.echoeco.addrEntity.StateRepository;
 import com.project.echoeco.common.constant.ProjectStatus;
 import com.project.echoeco.member.Member;
@@ -29,10 +35,19 @@ public class ActivityService {
 	private final MemberRepository memberRepository;
 	private final ATVT_ParticipantsRepository participateRepository;
 	private final StateRepository stateRepository;
+	private final AddressRepository addrRespository;
 
-	public List<Activity> allActivity() {
-
-		return this.activityRepository.findAll();
+	public Page<Activity> allActivity( String keyWord, Integer pageNum, String stateName) {
+		List<Sort.Order> sort = new ArrayList();
+		sort.add(Sort.Order.desc("createAt"));
+		Pageable pageable = PageRequest.of(pageNum,10, Sort.by(sort));
+		if(stateName.equals("All")) {
+			return this.activityRepository.findAllActivityWithKeyWord(keyWord, pageable);
+		}else {
+			Optional<State> state = this.stateRepository.findByState(stateName);
+			return this.activityRepository.findAllActivitiesWithKeywordAndState(keyWord, state.get(), pageable);
+						
+		}
 	}
 
 	public Optional<Activity> findById(Integer id) throws Exception {
@@ -75,8 +90,9 @@ public class ActivityService {
 				.build();
 		this.activityRepository.save(activity);
 		
-		State state = this.stateRepository.findByState(dto.getState());
-		Activity_State as = Activity_State.builder().activity(activity).state(state).build();
+		Optional<State> state = this.stateRepository.findByState(dto.getState());
+		Activity_State as = Activity_State.builder().activity(activity).state(state.get()).build();
+		this.addrRespository.save(as);
 	}
 
 	// 신청하기
@@ -99,6 +115,9 @@ public class ActivityService {
 						.member(member)
 						.build();
 				this.participateRepository.save(participate);
+				
+				activity.builder().curruntCnt(activity.getCurruntCnt()+1);
+				this.activityRepository.save(activity);
 			}
 		} else {
 			throw new Exception("다시 시도해 주세요");

@@ -31,6 +31,6 @@ public class Activity extends BaseProject {
 	private List<ProjectImg> activityImg;
 
 	@OneToOne(cascade = CascadeType.ALL)
-	private Activity_State activityState;
+	private Activity_State address;
 
 }
