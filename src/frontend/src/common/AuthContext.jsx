@@ -1,15 +1,13 @@
-
 import React, { useEffect, useState, useCallback } from 'react';
 import * as authAction from './AuthAction';
 
-
-function AuthContext({children}){
+function AuthContext({ children }) {
 
 
 const loginToken = {
-  grantType, 
-  accessToken, 
-  tokenExpiresIn
+    grantType,
+    accessToken,
+    tokenExpiresIn
 }
 
 const AuthContext = React.createContext({
@@ -25,7 +23,7 @@ const AuthContext = React.createContext({
   changePassword: (exPassword, newPassword) => {}
 });
 
-export const AuthContextProvider = props => {
+ const AuthContextProvider = props => {
   const tokenData = authAction.retriveStoredToken();
   let initialToken = '';
   if (tokenData) {
@@ -106,37 +104,41 @@ export const AuthContextProvider = props => {
 
   const changePasswordHandler = (exPassword, newPassword) => {
     setIsWellDone(false);
-    const data = AuthAction.changePasswordActionHandler(exPassword, newPassword, token);
-    data.then((result) => {
-      if (result !== null){
-        setIsWellDone(true);
-        logoutHandler();
-      }
-    })
-  }
+      const data = authAction.changePasswordActionHandler(
+        exPassword,
+        newPassword,
+        token
+      );
+      data.then(result => {
+        if (result !== null) {
+          setIsWellDone(true);
+          logoutHandler();
+        }
+      });
+    };
 
-  useEffect(()=>{
-    if(tokenData){
-      console.log(tokenData.duration);
-      logoutTimer = setTimeout(logoutHandler, tokenData.duration);
-    }
-  }, [tokenData, logoutHandler]);
+    useEffect(() => {
+      if (tokenData) {
+        console.log(tokenData.duration);
+        logoutTimer = setTimeout(logoutHandler, tokenData.duration);
+      }
+    }, [tokenData, logoutHandler]);
 
     const contextValue = {
       token,
       userObject,
       isConnected: signupHandler,
-      login : loginHandler,
+      login: loginHandler,
       getUser: getUserHandler,
       changeNicname: changeNicknameHandler,
       changePassword: changePasswordHandler
-    }
+    };
 
-    return(
-      <AuthContext.Provider value = {contextValue}>
+    return (
+      <AuthContext.Provider value={contextValue}>
         {props.children}
       </AuthContext.Provider>
-    )
-  }
-
-  export default AuthContext;
+    );
+  };
+}
+export default AuthContext;
