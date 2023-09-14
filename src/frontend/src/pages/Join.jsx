@@ -1,12 +1,38 @@
+import { useState } from "react";
 
+const validateEmail = (email) => {
+  return email
+    .toLowerCase()
+    .match(
+      /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/
+    );
+};
 
-const join = () => {
+const validatePassword = (password) => {
+  return password
+    .toLowerCase()
+    .match(/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/);
+};
+
+const validateNickname = (nickname) => {
+  return nickname.toLowerCase().match(/^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|].{2,8}$/);
+}
+const signup = () => {
+ const [email, setEmail] = useState("");
+ const [password, setPassword] = useState("");
+ const [nickname, setNickname] = useState("");
+
+ 
+ const isValiedEmail = validateEmail(email);
+ const isValiedPW = validatePassword(password);
+ const isValiedNickname = validateNickname(nickname);
+
   return (
     <>
       <form class="row g-3">
         <div class="col-md-6">
           <label for="inputEmail4" class="form-label">
-            Email
+            Email 
           </label>
           <input type="email" class="form-control" id="inputEmail4" />
         </div>
@@ -45,4 +71,4 @@ const join = () => {
     </>
   );
 }
-export default join;
+export default signup;
