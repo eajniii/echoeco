@@ -1,13 +1,14 @@
 import axios from 'axios';
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+
+import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import App from './app/App';
 import './index.css';
 import AuthProvider from './common/AuthProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-axios.defaults.baseURL = 'http://localhost:8080/api';
+axios.defaults.baseURL = 'http://localhost:8080';
 root.render(
   <AuthProvider>
     <BrowserRouter>

@@ -24,7 +24,7 @@ public class FundingService {
 
   }
 
-  public void newProject(FundingDto projectDto, MultipartFile imgFile) throws Exception {
+  public void newProject(FundingCreateRequest projectDto, MultipartFile imgFile) throws Exception {
     String oriImgName = imgFile.getOriginalFilename();
     String imgName = "";
     String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/files";

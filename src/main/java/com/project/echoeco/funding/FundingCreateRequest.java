@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 import lombok.Getter;
 
 @Getter
-public class FundingDto {
+public class FundingCreateRequest {
   @NotBlank(message = "프로젝트  목적을 선택하세요.")
   private String object;
 

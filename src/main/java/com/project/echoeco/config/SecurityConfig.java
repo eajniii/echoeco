@@ -6,37 +6,36 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.stereotype.Component;
 
-import com.project.echoeco.member.MemberService;
+import com.project.echoeco.config.Token.AuthenticationConfig;
+import com.project.echoeco.config.Token.JwtAccessDeniedHandler;
+import com.project.echoeco.config.Token.JwtAuthenticationEntryPoint;
+import com.project.echoeco.config.Token.TokenProvider;
 
 import lombok.RequiredArgsConstructor;
 
 @Configuration
-@EnableWebSecurity
-@RequiredArgsConstructor
 public class SecurityConfig {
-	private final MemberService memberService;
-	@Value("{jwt.secret}")
-	private String secretKey;
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 		return httpSecurity
-				.httpBasic().disable() // ui가 아닌 토큰 인증으로 수행
+				.httpBasic().disable()
 				.csrf().disable()
 				.cors().and()
 				.authorizeRequests()
 				.antMatchers("/**").permitAll()
 				.antMatchers("/members/join", "/members/login").permitAll()
-				.antMatchers(HttpMethod.POST, "/board/write").authenticated()
 				.and()
 				.sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 				.and()
-				.addFilterBefore(new JwtFilter(memberService, secretKey), UsernamePasswordAuthenticationFilter.class)
 				.build();
 	}
 	// @Bean
