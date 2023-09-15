@@ -2,10 +2,10 @@ package com.project.echoeco.activity.controller;
 
 import java.security.Principal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -33,13 +33,17 @@ public class ActivityController {
 	private final ActivityService activityService;
 	
 	
-	@GetMapping(value = "/")
-	public ResponseEntity<Page<Activity>> findAllActivity(
+	@GetMapping
+	public ResponseEntity<List<Activity>> findAllActivity(
 			@RequestParam(value = "state",defaultValue = "All") String state,
-			@RequestParam(value = "page",defaultValue = "0") Integer page,
 			@RequestParam(value = "keyWord",defaultValue = "") String keyWord
 			){
-		Page<Activity> activity = this.activityService.allActivity(keyWord, page, state);
+		List<Activity> activity = null;
+		try {
+			activity = this.activityService.allActivity(keyWord, state);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 		return ResponseEntity.ok(activity);
 	}
 

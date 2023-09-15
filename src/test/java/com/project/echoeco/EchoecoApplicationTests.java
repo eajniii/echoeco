@@ -86,11 +86,11 @@ class EchoecoApplicationTests {
 //			}
 //		}
 //	}
-	@Test
-	void getStateAndCity() {
-		List<City> city = this.cityRepository.findAll();
-		for(City _city : city) {
-			System.out.println(_city.getCity());
-		}
-	}
+//	@Test
+//	void getStateAndCity() {
+//		List<City> city = this.cityRepository.findAll();
+//		for(City _city : city) {
+//			System.out.println(_city.getCity());
+//		}
+//	}
 }

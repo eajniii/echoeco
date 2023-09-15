@@ -1,5 +1,6 @@
 package com.project.echoeco.addrEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -15,20 +16,24 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api")
+@CrossOrigin("http://localhost:3000")
+@RequestMapping("/api/city")
 public class AddressController {
 
 	private final AddressService addressService;
 	
-	@GetMapping("/city")
-	public ResponseEntity<String> getStateListByCity(@RequestParam("city") String city){
+	@GetMapping
+	public ResponseEntity<List<StateDTO>> getStateListByCity(@RequestParam("city") String city){
 		System.out.println(city);
-		List<State> state = this.addressService.returnstate(city);
-		for (State _state: state) {
-			System.out.print(_state.getState()+" ");
+		List<State> _state= this.addressService.returnstate(city);
+		List<StateDTO> dtoList = new ArrayList<>();
+		for (State state : _state) {
+			StateDTO dto = new StateDTO();
+			dto.setState(state.getState());
+			dtoList.add(dto);
+			System.out.println(state.getState());	
 		}
-		
-		return ResponseEntity.ok().body("처리되었습니다.");
+		return ResponseEntity.ok(dtoList);
 	}
 	
 }

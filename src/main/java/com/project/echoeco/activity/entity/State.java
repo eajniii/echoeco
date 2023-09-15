@@ -9,12 +9,16 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @Entity
 @Data
 @SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
 public class State {
 
 	@Id

@@ -37,15 +37,13 @@ public class ActivityService {
 	private final StateRepository stateRepository;
 	private final AddressRepository addrRespository;
 
-	public Page<Activity> allActivity( String keyWord, Integer pageNum, String stateName) {
-		List<Sort.Order> sort = new ArrayList();
-		sort.add(Sort.Order.desc("createAt"));
-		Pageable pageable = PageRequest.of(pageNum,10, Sort.by(sort));
+	public List<Activity> allActivity( String keyWord,String stateName) {
+		List<Activity> activity = new ArrayList();
 		if(stateName.equals("All")) {
-			return this.activityRepository.findAllActivityWithKeyWord(keyWord, pageable);
+			return this.activityRepository.findAllActivityWithKeyWord(keyWord);
 		}else {
 			Optional<State> state = this.stateRepository.findByState(stateName);
-			return this.activityRepository.findAllActivitiesWithKeywordAndState(keyWord, state.get(), pageable);
+			return this.activityRepository.findAllActivitiesWithKeywordAndState(keyWord, state.get());
 						
 		}
 	}
@@ -76,7 +74,6 @@ public class ActivityService {
 			}
 		}
 	}
-
 	// 프로젝트 생성하기
 	public void createProject(ActivityDTO dto, String email) {
 		Activity activity = Activity.builder()
@@ -94,7 +91,6 @@ public class ActivityService {
 		Activity_State as = Activity_State.builder().activity(activity).state(state.get()).build();
 		this.addrRespository.save(as);
 	}
-
 	// 신청하기
 	public void participate(Integer activity_idx, Long member_idx) throws Exception {
 
