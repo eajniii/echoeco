@@ -15,12 +15,17 @@ import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/member")
+@RequestMapping("/api/member")
 @Slf4j
 @CrossOrigin(originPatterns = "http://localhost:3000")
 public class MemberController {
   private final MemberService memberService;
 
+  @GetMapping("/main")
+  public String main() {
+	  return "/main";
+  }
+  
   @GetMapping("/mypage")
   public ResponseEntity<MemberInfoResponse> getMemberInfo() {
     MemberInfoResponse mypageBySecurity = memberService.getMypageBySecurity();

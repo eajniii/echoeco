@@ -1,5 +1,7 @@
 package com.project.echoeco.board;
 
+import java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -57,7 +59,7 @@ public class Board extends BaseMember{
 	private Integer views;
 	
 	@OneToMany(mappedBy = "board",cascade = CascadeType.REMOVE)
-	private List<Comment> comment; 
+	private List<Comment> comments = new ArrayList<>(); 
 	
     public BoardEdit.BoardEditBuilder toEditor() {
         return BoardEdit.builder()

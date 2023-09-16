@@ -32,14 +32,14 @@ class EchoecoApplicationTests {
 	void testJpa() {
 	
 		Member m1 = Member.builder()
-				.name("패트")
+				.nickname("패트")
 				.email("123@123.com")
 				.password("1234")
 				.tel(12345678)
 				.role(Role.MEMBER)
 				.build();
 
-		System.out.println(m1.getName());
+		System.out.println(m1.getNickname());
 		System.out.println(m1.getEmail());
 		System.out.println(m1.getPassword());
 		System.out.println(m1.getTel());

@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -22,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @EnableWebSecurity
 @Component
-public class SecurityConfig {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private final TokenProvider tokenProvider;
 	private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
@@ -36,7 +37,7 @@ public class SecurityConfig {
 	@Bean
 	public WebSecurityCustomizer configure() {
 		return web -> web.ignoring()
-				.antMatchers("/h2-console")
+				.antMatchers("/h2-console/**")
 				.antMatchers("/static/**")
 				.antMatchers("/api/**");
 
@@ -57,7 +58,6 @@ public class SecurityConfig {
 						.antMatchers("/auth/**").permitAll()
 						.anyRequest().authenticated())
 				.apply(new AuthenticationConfig(tokenProvider));
-
 		return httpSecurity.build();
 
 	}
