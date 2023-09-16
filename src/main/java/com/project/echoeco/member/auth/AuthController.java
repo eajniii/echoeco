@@ -22,8 +22,8 @@ import com.project.echoeco.member.MemberLoginRequest;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/auth")
 @RequiredArgsConstructor
+@RequestMapping("/auth")
 @CrossOrigin(originPatterns = "http://localhost:3000")
 public class AuthController {
 

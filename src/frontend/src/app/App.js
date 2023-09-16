@@ -1,52 +1,41 @@
-import React, { useState, useEffect } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import Footer from '../common/Footer';
 import Header from '../common/Header';
 import NotFound from '../common/NotFound';
 import '../css/App.css';
 import Main from '../pages/Main';
-import Join from '../pages/Join';
-import FundingList from '../pages/funding/FundingList';
-import FundingCreate from '../pages/funding/FundingCreate';
-import FundingDetails from '../pages/funding/FundingDetails';
-import FundingList from '../pages/funding/FundingList';
-import axios from 'axios';
+import Signup from '../pages/member/Signup';
+import Login from '../pages/member/Login';
+import Mypage from '../pages/member/Mypage';
+import AuthContext from '../common/authRelated/AuthContext';
 
-const App = () => {
-  const [hello, setHello] = useState('');
-
-  useEffect(() => {
-    axios
-      .get('/api/hello')
-      .then(response => setHello(response.data))
-      .catch(error => console.log(error));
-  }, []);
+function App() {
+  const auth = useContext(AuthContext);
   return (
     <div className="App">
       <Header />
-      {hello}
       <Routes>
         <Route path="/" element={<Main />}></Route>
-        <Route path="/join" element={<Join />}></Route>
-        <Route path="/project/funding/list" element={<FundingList />}></Route>
         <Route
-          path="/project/funding/create"
-          element={<FundingCreate />}
+          path="/signup"
+          element={auth.isConnected ? <Navigate to="/" /> : <Signup />}
         ></Route>
         <Route
-          path="/project/funding/details/:funding_id"
-          element={<FundingDetails />}
+          path="/login/*"
+          element={auth.isConnected ? <Navigate to="/" /> : <Login />}
         ></Route>
         <Route
-          path="/project/funding/edit/:funding_id"
-          element={<FundingDetails />}
+          path="/member/*"
+          element={auth.isConnected ? <Navigate to="/" /> : <Mypage />}
         ></Route>
+
         {/* 없는 페이지 처리 */}
         <Route path="*" element={<NotFound />}></Route>
       </Routes>
       <Footer />
     </div>
   );
-};
+}
 
 export default App;
