@@ -17,7 +17,7 @@ const calculateRemainingTime = expirationTime => {
 
 export const loginTokenHandler = (token, expirationTime) => {
   localStorage.setItem('token', token);
-  localStorage.setItem('expirationTime', expirationTime);
+  localStorage.setItem('expirationTime', String(expirationTime));
 
   const remainingTime = calculateRemainingTime(expirationTime);
   return remainingTime;
@@ -40,7 +40,7 @@ export const retriveStoredToken = () => {
     duration: remainingTime
   };
 };
-export const signupActuinHandler = (email, password, nickname) => {
+export const signupActionHandler = (email, password, nickname) => {
   const URL = '/auth/signup';
   const signupObject = { email, password, nickname };
   const response = POST(URL, signupObject, {});
@@ -72,7 +72,7 @@ export const changeNicknameActionHandler = (nickname, token) => {
   return response;
 };
 export const changePasswordActionHandler = (exPassword, newPassword, token) => {
-  const URL = '/member/modify/nickname';
+  const URL = '/member/modify/password';
   const changePasswordObject = { exPassword, newPassword };
   const response = POST(URL, changePasswordObject, createTokenHeader(token));
 

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.project.echoeco.common.exception.AppException;
 import com.project.echoeco.common.exception.ErrorCode;
 import com.project.echoeco.config.SecurityUtil;
+import com.project.echoeco.member.auth.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
 

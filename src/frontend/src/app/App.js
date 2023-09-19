@@ -9,6 +9,7 @@ import Signup from '../pages/member/Signup';
 import Login from '../pages/member/Login';
 import Mypage from '../pages/member/Mypage';
 import AuthContext from '../common/authRelated/AuthContext';
+import 'bootstrap';
 
 function App() {
   const auth = useContext(AuthContext);

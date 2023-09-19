@@ -30,8 +30,8 @@ public class MemberController {
 	}
 
 	@PostMapping("/modify/nickname")
-	public ResponseEntity<MemberInfoResponse> changeNickname(@RequestBody MemberJoinRequest dto) {
-		return ResponseEntity.ok(memberService.changeMemberNickname(dto.getEmail(), dto.getName()));
+	public ResponseEntity<MemberInfoResponse> changeNickname(@RequestBody MemberRequest dto) {
+		return ResponseEntity.ok(memberService.changeMemberNickname(dto.getEmail(), dto.getNickname()));
 	}
 
 	@PostMapping("/modify/password")

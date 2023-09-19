@@ -31,7 +31,7 @@ export const AuthContextProvider = props => {
   const [isWellDone, setIsWellDone] = useState(false);
   const userIsConnected = !!token;
   const signupHandler = (email, password, nickname) => {
-    const response = authAction.signupActuinHandler(email, password, nickname);
+    const response = authAction.signupActionHandler(email, password, nickname);
     response.then(result => {
       if (result !== null) {
         setIsWellDone(true);
@@ -41,12 +41,11 @@ export const AuthContextProvider = props => {
 
   const loginHandler = (email, password) => {
     setIsWellDone(false);
-    console.log(isWellDone);
-
     const data = authAction.loginActionHandler(email, password);
     data.then(result => {
       if (result !== null) {
         const loginData = result.data;
+        console.log(loginData);
         setToken(loginData.accessToken);
         if (logoutTimer) {
           clearTimeout(logoutTimer);

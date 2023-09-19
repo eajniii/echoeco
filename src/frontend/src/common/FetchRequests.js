@@ -1,17 +1,7 @@
 import axios from 'axios';
 
-const fetchData = () => {
-  let method = '';
-  let url = '';
-  let data = [];
-  let header = [];
-};
-
 const fetchAuth = async fetchData => {
-  const method = fetchData.method;
-  const url = fetchData.url;
-  const data = fetchData.data;
-  const header = fetchData.header;
+  const { method, url, data, header } = fetchData;
 
   try {
     const response =
@@ -32,7 +22,6 @@ const fetchAuth = async fetchData => {
       alert('잘못된 요청입니다.');
       return null;
     }
-
     return response;
   } catch (err) {
     if (axios.isAxiosError(err)) {

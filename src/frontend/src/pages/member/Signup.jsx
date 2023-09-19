@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from '../../common/authRelated/AuthContext';
-
+import '../../css/Form.css';
 const Signup = () => {
   let navigate = useNavigate();
   const auth = useContext(AuthContext);
@@ -30,9 +30,6 @@ const Signup = () => {
   const validateNickname = nickname => {
     return nickname.toLowerCase().match(/^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|].{2,8}$/);
   };
-  const isValiedEmail = validateEmail(email);
-  const isValiedPW = validatePassword(password);
-  const isValiedNickname = validateNickname(nickname);
 
   //이메일 유효성
   const onChangeEmail = useCallback(async e => {
@@ -48,7 +45,7 @@ const Signup = () => {
   const onChangePassword = useCallback(e => {
     const typedPassword = e.target.value;
     setPassword(typedPassword);
-    if (!validateEmail(typedPassword)) {
+    if (!validatePassword(typedPassword)) {
       setPasswordMsg('영문, 숫자, 특수문자를 조합해 8자 이상 입력해주세요.');
     } else {
       setPasswordMsg('안전한 비밀번호입니다.');
@@ -59,7 +56,7 @@ const Signup = () => {
   const onChangeNickname = useCallback(e => {
     const typedNickname = e.target.value;
     setNickname(typedNickname);
-    if (!validateEmail(typedNickname)) {
+    if (!validateNickname(typedNickname)) {
       setNicknameMsg('2글자 이상 8글자 미만으로 입력해주세요.');
     } else {
       setNicknameMsg('올바른 닉네임 형식입니다.');
@@ -104,7 +101,7 @@ const Signup = () => {
           </label>
           <div id="msg"> {passwordMsg} </div>
         </div>
-        <div className="col-12">
+        <div className="col-md-6">
           <label htmlFor="inName" className="form-label" name="nicknameLabel">
             Nickname
             <input
@@ -119,7 +116,7 @@ const Signup = () => {
         </div>
         <div id="msg"> {NicknameMsg} </div>
         <div className="col-12">
-          <button type="submit" className="btn btn-primary" id="btnSubmit">
+          <button type="submit" className="btn btn-warning" id="btnSubmit">
             Sign in
           </button>
         </div>

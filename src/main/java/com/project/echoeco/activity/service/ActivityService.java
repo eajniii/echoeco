@@ -17,7 +17,7 @@ import com.project.echoeco.activity.repository.ActivityRepository;
 import com.project.echoeco.addrEntity.StateRepository;
 import com.project.echoeco.common.constant.ProjectStatus;
 import com.project.echoeco.member.Member;
-import com.project.echoeco.member.MemberRepository;
+import com.project.echoeco.member.auth.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -85,25 +85,25 @@ public class ActivityService {
 
 		Optional<Activity> _activity = this.activityRepository.findById(activity_idx);
 		Optional<Member> _member = this.memberRepository.findById(member_idx);
-		if (!_activity.isEmpty() && !_member.isEmpty()) {
-			Activity activity = _activity.get();
-			Member member = _member.get();
-			if (activity.getCurruntCnt() >= activity.getGoalCnt()) {
-				activity.builder().projectStatus(ProjectStatus.CLOSED).build();
-				this.activityRepository.save(activity);
-				throw new Exception("정원 초과 하였습니다.");
+		// if (!_activity.isEmpty() && !_member.isEmpty()) {
+		// Activity activity = _activity.get();
+		// Member member = _member.get();
+		// if (activity.getCurruntCnt() >= activity.getGoalCnt()) {
+		// activity.builder().projectStatus(ProjectStatus.CLOSED).build();
+		// this.activityRepository.save(activity);
+		// throw new Exception("정원 초과 하였습니다.");
 
-			} else {
-				Activity_Member participate = Activity_Member
-						.builder()
-						.activity(activity)
-						.member(member)
-						.build();
-				this.participateRepository.save(participate);
-			}
-		} else {
-			throw new Exception("다시 시도해 주세요");
-		}
+		// } else {
+		// Activity_Member participate = Activity_Member
+		// .builder()
+		// .activity(activity)
+		// .member(member)
+		// .build();
+		// this.participateRepository.save(participate);
+		// }
+		// } else {
+		// throw new Exception("다시 시도해 주세요");
+		// }
 	}
 
 	// 삭제하기
