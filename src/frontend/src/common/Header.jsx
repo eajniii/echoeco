@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import logo from '../img/로고.png';
 
 function Header(props) {
   const location = useLocation;
@@ -22,8 +23,8 @@ function Header(props) {
             >
               <span className="navbar-toggler-icon"></span>
             </button>
-            <a className="logo" href="#">
-              <img src="/img/로고.png}" alt="logo"></img>
+            <a className="logo" href="/">
+              <img src={logo} alt="ECHO ECO" width={'70px;'} />
             </a>
             <div className="collapse navbar-collapse" id="navbarTogglerDemo03">
               <ul className="navbar-nav me-auto mb-2 mb-lg-0">
