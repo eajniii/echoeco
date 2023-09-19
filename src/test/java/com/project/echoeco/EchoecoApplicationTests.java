@@ -2,6 +2,7 @@ package com.project.echoeco;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,14 +10,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.project.echoeco.activity.entity.Activity;
-import com.project.echoeco.activity.entity.City;
 import com.project.echoeco.activity.entity.State;
 import com.project.echoeco.activity.repository.ActivityRepository;
 import com.project.echoeco.addrEntity.CityRepository;
 import com.project.echoeco.addrEntity.StateRepository;
-import com.project.echoeco.common.constant.ProjectStatus;
-import com.project.echoeco.common.constant.Role;
-import com.project.echoeco.member.Member;
 import com.project.echoeco.member.MemberRepository;
 
 @SpringBootTest
@@ -86,11 +83,30 @@ class EchoecoApplicationTests {
 //			}
 //		}
 //	}
-//	@Test
-//	void getStateAndCity() {
+	@Test
+	void getStateAndCity() {
 //		List<City> city = this.cityRepository.findAll();
 //		for(City _city : city) {
 //			System.out.println(_city.getCity());
 //		}
-//	}
+	}
+	@Test
+	void insertActivity() {
+//		Optional<State> state = this.stateRepository.findByState("고양시");
+//		for(int i = 0; i<100; i++) {
+//			Activity activity = Activity.builder().createdAt(LocalDateTime.now()).contents("내용1").title("제목 "+i).createdBy("ltk2956").goalCnt(5).curruntCnt(0).state(state.get()).build();
+//			this.atvtRepository.save(activity);
+//		}
+//		Optional<Activity> _activity1 = atvtRepository.findById(11);
+//		Activity at = _activity1.get();
+//		System.out.println(at.getContents()+at.getTitle());
+//		Activity modifyAt = at.toBuilder().contents("수정된 내용1").modifiedAt(LocalDateTime.now()).title("수정됐지롱1").build();
+//		System.out.println(modifyAt.getContents()+modifyAt.getTitle());
+//		this.atvtRepository.save(modifyAt);
+		Optional<State> state = this.stateRepository.findByState("고양시");
+		List<Activity> _activity = this.atvtRepository.findAllActivitiesWithKeywordAndState("수정", state.get());
+		for(Activity activity: _activity) {
+			System.out.println(activity.getContents()+activity.getId());
+		}
+	}
 }

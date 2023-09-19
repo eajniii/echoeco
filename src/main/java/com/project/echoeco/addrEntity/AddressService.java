@@ -18,7 +18,6 @@ public class AddressService {
 	private final StateRepository stateRepsotiory;
 
 	public List<State> returnstate(String cityName) {
-		System.out.println(1);
 		Optional<City> _city = this.cityRepository.findByCity(cityName);
 		
 		List<State> state = this.stateRepsotiory.findByCity(_city.get());

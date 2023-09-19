@@ -24,14 +24,12 @@ public class AddressController {
 	
 	@GetMapping
 	public ResponseEntity<List<StateDTO>> getStateListByCity(@RequestParam("city") String city){
-		System.out.println(city);
 		List<State> _state= this.addressService.returnstate(city);
 		List<StateDTO> dtoList = new ArrayList<>();
 		for (State state : _state) {
 			StateDTO dto = new StateDTO();
 			dto.setState(state.getState());
 			dtoList.add(dto);
-			System.out.println(state.getState());	
 		}
 		return ResponseEntity.ok(dtoList);
 	}

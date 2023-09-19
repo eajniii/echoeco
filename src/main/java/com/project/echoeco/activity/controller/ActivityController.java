@@ -1,6 +1,7 @@
 package com.project.echoeco.activity.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.echoeco.activity.dto.ActivityDTO;
+import com.project.echoeco.activity.dto.ActivityListResponseDTO;
+import com.project.echoeco.activity.dto.ActivityResponseDTO;
 import com.project.echoeco.activity.entity.Activity;
 import com.project.echoeco.activity.service.ActivityService;
 
@@ -34,17 +37,17 @@ public class ActivityController {
 	
 	
 	@GetMapping
-	public ResponseEntity<List<Activity>> findAllActivity(
-			@RequestParam(value = "state",defaultValue = "All") String state,
+	public ResponseEntity<List<ActivityListResponseDTO>> findAllActivity(
+			@RequestParam(value = "state",defaultValue = "") String state,
 			@RequestParam(value = "keyWord",defaultValue = "") String keyWord
 			){
-		List<Activity> activity = null;
+		List<ActivityListResponseDTO> activityListDTO = new ArrayList<ActivityListResponseDTO>();
 		try {
-			activity = this.activityService.allActivity(keyWord, state);
+			activityListDTO = this.activityService.allActivity(keyWord, state);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		return ResponseEntity.ok(activity);
+		return ResponseEntity.ok(activityListDTO);
 	}
 
 	@GetMapping(value = "/{activity_id}")
@@ -53,7 +56,9 @@ public class ActivityController {
 	        Optional<Activity> _activity = this.activityService.findById(idx);
 	        if (_activity.isPresent()) {
 	            Activity activity = _activity.get();
-	            return ResponseEntity.ok(activity);
+	            ActivityResponseDTO activityForm = new ActivityResponseDTO();
+	            activityForm.setActivityResponseDTO(activity);
+	            return ResponseEntity.ok(activityForm);
 	        } else {
 	            Map<String, Object> errorResponse = new HashMap<>();
 	            errorResponse.put("message", "삭제된 게시물입니다.");

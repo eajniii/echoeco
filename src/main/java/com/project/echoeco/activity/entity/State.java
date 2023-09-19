@@ -2,6 +2,7 @@ package com.project.echoeco.activity.entity;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,12 +26,13 @@ public class State {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idx;
 	
+	@Column(unique = true)
 	private String state;
 	
 	@ManyToOne
 	private City city;
 	
-	@OneToMany
-	private List<Activity_State> activity;
+	@OneToMany(mappedBy = "state")
+	private List<Activity> activity;
 	
 }

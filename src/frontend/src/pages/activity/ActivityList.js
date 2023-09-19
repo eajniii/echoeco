@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const ActivityList = () => {
   const [activities, setActivity] = useState([
@@ -8,9 +9,9 @@ const ActivityList = () => {
       goalCnt: '',
       deadLine: '',
       title: '',
-      content: '',
       currentCnt: '',
-      createDate: ''
+      createDate: '',
+      imgUri: ''
     }
   ]);
   const [keyword, setKeyWord] = useState(``);
@@ -64,27 +65,33 @@ const ActivityList = () => {
     axios
       .get(url)
       .then(response => {
-        const activitisList = response.data.map(res => {
-          return {
-            id: res.id,
-            goalCnt: res.goalCnt,
-            deadLine: res.deadLine,
-            title: res.title,
-            content: res.contents,
-            currentCnt: res.currentCnt,
-            createDate: res.createdAt
-          };
-        });
-        setActivity(activitisList);
-        console.log(activitisList);
+        if (response.data === null) {
+          console.log('실패');
+          console.log(response.data);
+        } else {
+          console.log('여기성공');
+          const activitiesList = response.data.map(res => {
+            return {
+              id: res.id,
+              goalCnt: res.goalCnt,
+              deadLine: res.DeadLine,
+              title: res.title,
+              currentCnt: res.curruntCnt,
+              createDate: res.createdAt,
+              imgUri: res.imgUri
+            };
+          });
+          setActivity(activitiesList);
+          console.log(activities);
+        }
       })
       .catch(error => {
-        console.error('Error fetching activities:', error);
+        console.error('활동 가져오기 오류:', error);
       });
   };
-  // const handlePageChange = nextpage => {
-  //   setPage(nextpage);
-  // };
+  const handlePageChange = nextpage => {
+    setPage(nextpage);
+  };
   return (
     <div>
       <input
@@ -109,7 +116,30 @@ const ActivityList = () => {
           </option>
         ))}
       </select>
-      <div></div>
+      <div>
+        <table>
+          <th>
+            <td>번호</td>
+            <td>제목</td>
+            <td>현제 인원/마감 인원</td>
+            <td>프로젝트 시작일</td>
+            <td>마감 일</td>
+          </th>
+          {activities.map(activity => (
+            <tr>
+              <Link to={`/activity/detail/${activity.id}`} key={activity.id}>
+                <td>{activity.id}</td>
+                <td>{activity.title}</td>
+                <td>
+                  {activity.currentCnt}/{activity.goalCnt}
+                </td>
+                <td>{activity.createDate}</td>
+                <td>{activity.deadLine}</td>
+              </Link>
+            </tr>
+          ))}
+        </table>
+      </div>
     </div>
   );
 };

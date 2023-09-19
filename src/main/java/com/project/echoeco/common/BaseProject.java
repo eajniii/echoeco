@@ -14,17 +14,15 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.project.echoeco.common.constant.ProjectStatus;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-@SuperBuilder
+@SuperBuilder(toBuilder = true)
 @Getter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor
-@AllArgsConstructor
 public abstract class BaseProject extends BaseMember {
 
 	@Id
@@ -46,5 +44,6 @@ public abstract class BaseProject extends BaseMember {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "projectStatus")
 	private ProjectStatus projectStatus;
+	
 
 }
