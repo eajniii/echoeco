@@ -29,12 +29,10 @@ const fetchAuth = async fetchData => {
       const serverError = err;
       if (serverError && serverError.response) {
         console.log(serverError.response.data);
-        alert('잠시 후 다시 시도해 주세요.');
         return null;
       }
     }
     console.log(err);
-    alert('잠시후 다시 시도해 주세요');
     return null;
   }
 };
