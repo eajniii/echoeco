@@ -4,12 +4,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
 import org.springframework.stereotype.Component;
 
 import com.project.echoeco.config.Token.AuthenticationConfig;
@@ -32,15 +30,6 @@ public class SecurityConfig {
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-
-	// @Bean
-	// public WebSecurityCustomizer configure() {
-	// return web -> web.ignoring()
-	// .antMatchers("/h2-console")
-	// .antMatchers("/static/**")
-	// .antMatchers("/api/**");
-
-	// }
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity)

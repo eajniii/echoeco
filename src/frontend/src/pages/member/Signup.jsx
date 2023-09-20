@@ -63,6 +63,26 @@ const Signup = () => {
     }
   }, []);
 
+  //이메일 중복 검사
+  const onCheckEmail = async e => {
+    e.preventDefault();
+    auth.checkEmail(email);
+    if (!auth.isWellDone) {
+      setEmailMsg('이미 등록된 이메일입니다.');
+    } else {
+      setEmailMsg('사용할 수 있는 이메일입니다.');
+    }
+  };
+  //이메일 중복 검사
+  const onCheckNickname = async e => {
+    e.preventDefault();
+    auth.checkNickname(nickname);
+    if (!auth.isWellDone) {
+      setNicknameMsg('이미 등록된 닉네임입니다.');
+    } else {
+      setNicknameMsg('사용할 수 있는 닉네임입니다.');
+    }
+  };
   const submitHandler = e => {
     e.preventDefault();
     auth.signup(email, password, nickname);
@@ -84,6 +104,9 @@ const Signup = () => {
               onChange={onChangeEmail}
               required
             />
+            <button className="btn btn-warning" onClick={onCheckEmail}>
+              check
+            </button>
           </label>
           <div id="msg"> {emailMsg} </div>
         </div>
@@ -112,6 +135,9 @@ const Signup = () => {
               onChange={onChangeNickname}
               required
             />
+            <button className="btn btn-warning" onClick={onCheckNickname}>
+              check
+            </button>
           </label>
         </div>
         <div id="msg"> {NicknameMsg} </div>

@@ -7,8 +7,11 @@ export const AuthContext = React.createContext({
   token: '',
   userObject: { email: '', nickname: '' },
   isConnected: false,
-  isWellDone: false,
+  isPostSuccess: false,
+  isGetSuccess: false,
   signup: (email, password, nickname) => {},
+  checkEmail: () => {},
+  checkNickname: () => {},
   login: (email, password) => {},
   logout: () => {},
   getUser: () => {},
@@ -28,28 +31,41 @@ export const AuthContextProvider = props => {
     nickname: ''
   });
 
-  const [isWellDone, setIsWellDone] = useState(false);
+  const [isPostSuccess, setIsPostSuccess] = useState(false);
+  const [isGetSuccess, setIsGetSuccess] = useState(false);
   const userIsConnected = !!token;
   const signupHandler = (email, password, nickname) => {
     const response = authAction.signupActionHandler(email, password, nickname);
     response.then(result => {
       if (result !== null) {
-        setIsWellDone(true);
+        setIsPostSuccess(true);
       }
     });
   };
-
+  const checkEmailHandler = email => {
+    const response = authAction.checkDupliatedEmailHandler(email);
+    response.then(result => {
+      if (result !== null) {
+        setIsPostSuccess(true);
+      }
+    });
+  };
+  const checkNicknameHandler = nickname => {
+    const response = authAction.checkDupliatedNicknameHandler(nickname);
+    response.then(result => {
+      if (result !== null) {
+        setIsPostSuccess(true);
+      }
+    });
+  };
   const loginHandler = (email, password) => {
-    setIsWellDone(false);
+    setIsPostSuccess(false);
     const data = authAction.loginActionHandler(email, password);
     data.then(result => {
       if (result !== null) {
         const loginData = result.data;
         console.log(loginData);
         setToken(loginData.accessToken);
-        if (logoutTimer) {
-          clearTimeout(logoutTimer);
-        }
         logoutTimer = setTimeout(
           logoutHandler,
           authAction.loginTokenHandler(
@@ -57,8 +73,8 @@ export const AuthContextProvider = props => {
             loginData.tokenExpiresIn
           )
         );
-        setIsWellDone(true);
-        console.log(isWellDone);
+        setIsPostSuccess(true);
+        console.log(isPostSuccess);
       }
     });
   };
@@ -72,33 +88,33 @@ export const AuthContextProvider = props => {
   }, []);
 
   const getUserHandler = () => {
-    setIsWellDone(false);
+    setIsGetSuccess(false);
     const data = authAction.getUserActionHandler(token);
     data.then(result => {
       if (result !== null) {
         console.log('user on surfing');
         const userData = result.data;
         setUserObject(userData);
-        setIsWellDone(true);
+        setIsGetSuccess(true);
       }
     });
   };
 
   const changeNicknameHandler = nickname => {
-    setIsWellDone(false);
+    setIsPostSuccess(false);
     const data = authAction.changeNicknameActionHandler(nickname, token);
     data.then(result => {
       if (result !== null) {
         console.log('user on surfing');
         const userData = result.data;
         setUserObject(userData);
-        setIsWellDone(true);
+        setIsPostSuccess(true);
       }
     });
   };
 
   const changePasswordHandler = (exPassword, newPassword) => {
-    setIsWellDone(false);
+    setIsPostSuccess(false);
     const data = authAction.changePasswordActionHandler(
       exPassword,
       newPassword,
@@ -106,7 +122,7 @@ export const AuthContextProvider = props => {
     );
     data.then(result => {
       if (result !== null) {
-        setIsWellDone(true);
+        setIsPostSuccess(true);
         logoutHandler();
       }
     });
@@ -123,8 +139,13 @@ export const AuthContextProvider = props => {
     token,
     userObject,
     isConnected: userIsConnected,
+    isGetSuccess,
+    isPostSuccess,
     signup: signupHandler,
+    checkEmail: checkEmailHandler,
+    checkNickname: checkNicknameHandler,
     login: loginHandler,
+    logout: logoutHandler,
     getUser: getUserHandler,
     changeNicname: changeNicknameHandler,
     changePassword: changePasswordHandler

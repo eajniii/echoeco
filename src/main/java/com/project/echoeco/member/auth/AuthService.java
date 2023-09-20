@@ -17,10 +17,10 @@ import com.project.echoeco.member.MemberInfoResponse;
 import com.project.echoeco.member.MemberRequest;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class AuthService {
   private final AuthenticationManagerBuilder managerBuilder;
   private final MemberRepository memberRepository;

@@ -22,7 +22,7 @@ public class MemberService {
 	public MemberInfoResponse getMypageBySecurity() {
 		return memberRepository.findById(SecurityUtil.getCurrentMemberId())
 				.map(MemberInfoResponse::fromMember)
-				.orElseThrow(() -> new AppException(ErrorCode.UNKNOWN_MEMBER));
+				.orElseThrow(() -> new AppException(ErrorCode.UNKNOWN_MEMBER, ErrorCode.UNKNOWN_MEMBER.getMessage()));
 
 	}
 

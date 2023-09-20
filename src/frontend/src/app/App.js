@@ -5,6 +5,9 @@ import Header from '../common/Header';
 import NotFound from '../common/NotFound';
 import '../css/App.css';
 import Main from '../pages/Main';
+import ActivityDetail from '../pages/activity/ActivityDetail';
+import ActivityList from '../pages/activity/ActivityList';
+import ActivityCreate from '../pages/activity/ActivityCreate';
 import Signup from '../pages/member/Signup';
 import Login from '../pages/member/Login';
 import Mypage from '../pages/member/Mypage';
@@ -30,7 +33,12 @@ function App() {
           path="/member/*"
           element={auth.isConnected ? <Navigate to="/" /> : <Mypage />}
         ></Route>
-
+        <Route
+          path="/activity/detail/:activity_id"
+          element={<ActivityDetail />}
+        ></Route>
+        <Route path="/activity" element={<ActivityList />}></Route>
+        <Route path="/activity/create" element={<ActivityCreate />}></Route>
         {/* 없는 페이지 처리 */}
         <Route path="*" element={<NotFound />}></Route>
       </Routes>

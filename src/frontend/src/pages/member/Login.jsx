@@ -1,6 +1,7 @@
 import React, { useState, useContext, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from '../../common/authRelated/AuthContext';
+import Signup from './Signup';
 
 const Login = () => {
   const [emailInput, setEmailInput] = useState('');
@@ -60,8 +61,12 @@ const Login = () => {
           <div id="msg"> {passwordMsg} </div>
         </div>
         <div className="col-12">
+          <a href="#">ID/PASSWORD 찾기</a>
           <button type="submit" className="btn btn-warning" id="btnSubmit">
             Login
+          </button>
+          <button className="btn btn-success">
+            <a href="./Signup">Signup</a>
           </button>
           {isLoading && <p>Loding...</p>}
         </div>
