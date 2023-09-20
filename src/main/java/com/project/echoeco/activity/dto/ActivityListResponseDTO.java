@@ -1,6 +1,6 @@
 package com.project.echoeco.activity.dto;
 
-import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import com.project.echoeco.activity.entity.Activity;
 
@@ -15,9 +15,9 @@ public class ActivityListResponseDTO {
 	
 	public String title;
 	
-	public LocalDateTime createAt;
+	public String createAt;
 	
-	public LocalDateTime DeadLine;
+	public String deadLine;
 	
 	public String imgUri;
 	
@@ -27,10 +27,10 @@ public class ActivityListResponseDTO {
 	
 	public void setActivityListDTO(Activity activity) {
 		this.id = activity.getId();
-		this.createAt = activity.getCreatedAt();
+		this.createAt = activity.getCreatedAt().format(DateTimeFormatter.ofPattern("yy년 MM월 dd일"));;
 		this.object = activity.getObject();
 		this.title = activity.getTitle();
-		this.DeadLine = activity.getDeadLine();
+//		this.deadLine = activity.getDeadLine().format(DateTimeFormatter.ofPattern("yy년 MM월 dd일 HH:mm:ss"));
 		this.goalCnt = activity.getGoalCnt();
 		this.currentCnt = activity.getCurruntCnt();
 	}

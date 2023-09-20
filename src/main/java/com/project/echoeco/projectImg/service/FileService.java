@@ -1,4 +1,4 @@
-package com.project.echoeco.projectImg;
+package com.project.echoeco.projectImg.service;
 
 import java.io.File;
 import java.io.FileOutputStream;

@@ -8,10 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 import com.project.echoeco.common.BaseProject;
-import com.project.echoeco.projectImg.ProjectImg;
+import com.project.echoeco.projectImg.entity.ActivityImg;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,7 +32,7 @@ public class Activity extends BaseProject {
 
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "projectImgId")
-	private List<ProjectImg> activityImg;
+	private List<ActivityImg> activityImg;
 	
 	@ManyToOne
 	@JoinColumn(name = "state_id")

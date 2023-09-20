@@ -9,7 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 import com.project.echoeco.common.BaseProject;
-import com.project.echoeco.projectImg.ProjectImg;
+import com.project.echoeco.projectImg.entity.FundingImg;
 
 import lombok.Getter;
 import lombok.ToString;

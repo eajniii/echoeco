@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.project.echoeco.activity.dto.ActivityDTO;
 import com.project.echoeco.activity.dto.ActivityListResponseDTO;
@@ -19,6 +20,7 @@ import com.project.echoeco.addrEntity.StateRepository;
 import com.project.echoeco.common.constant.ProjectStatus;
 import com.project.echoeco.member.Member;
 import com.project.echoeco.member.MemberRepository;
+import com.project.echoeco.projectImg.service.ProjectImgService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -30,6 +32,7 @@ public class ActivityService {
 	private final MemberRepository memberRepository;
 	private final ATVT_ParticipantsRepository participateRepository;
 	private final StateRepository stateRepository;
+	private final ProjectImgService projectImgService;
 
 	public List<ActivityListResponseDTO> allActivity( String keyWord,String stateName) {
 		if(stateName.equals("")) {
@@ -82,7 +85,7 @@ public class ActivityService {
 		}
 	}
 	// 프로젝트 생성하기
-	public void createProject(ActivityDTO dto, String email) {
+	public void createProject(ActivityDTO dto, String email) throws Exception {
 		Optional<State> _state = this.stateRepository.findByState(dto.getState());
 		Activity activity = Activity.builder()
 				.contents(dto.getContent())
@@ -95,6 +98,14 @@ public class ActivityService {
 				.deadLine(dto.getDeadLine())
 				.build();
 		this.activityRepository.save(activity);
+		
+		for(int i = 0; i<dto.getActivityImg().size(); i++) {
+			if(i == 0) {
+				this.projectImgService.ActivityImg(dto.getActivityImg().get(i), activity, "Y");
+			}else {
+				this.projectImgService.ActivityImg(dto.getActivityImg().get(i), activity, "N");
+			}
+		}
 		
 		
 	}

@@ -1,8 +1,9 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const ActivityDetail = () => {
+  const navigate = useNavigate();
   const [activity, setActivity] = useState({
     id: '',
     title: '',
@@ -23,6 +24,7 @@ const ActivityDetail = () => {
     axios
       .get(`http://localhost:8080/api/activity/${activity_id}`)
       .then(response => {
+        console.log(response.data);
         const responseData = response.data; // Destructure the response data
         const activityForm = {
           id: responseData.id,
@@ -42,6 +44,8 @@ const ActivityDetail = () => {
       })
       .catch(error => {
         console.error('Error fetching data:', error);
+        alert('현제 삭제된 페이지 입니다');
+        navigate(-1);
       });
   }, [activity_id]); // Add activity_id as a dependency to useEffect
 

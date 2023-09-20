@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.project.echoeco.activity.entity.Activity;
 import com.project.echoeco.activity.entity.State;
+import com.project.echoeco.common.constant.ProjectStatus;
 
 @Repository
 public interface ActivityRepository extends JpaRepository<Activity, Integer> {
@@ -25,6 +26,6 @@ public interface ActivityRepository extends JpaRepository<Activity, Integer> {
 				"OR a.contents LIKE CONCAT('%', :kw, '%')) ")
 		List<Activity> findAllActivityWithKeyWord(
 		    @Param("kw") String keyWord);
-		
-		List<Activity> findByState(State state);
+
+		List<Activity> findByProjectStatus(ProjectStatus pjs);
 }

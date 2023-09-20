@@ -36,12 +36,17 @@ public class ActivityController {
 	private final ActivityService activityService;
 	
 	
+	
 	@GetMapping
 	public ResponseEntity<List<ActivityListResponseDTO>> findAllActivity(
 			@RequestParam(value = "state",defaultValue = "") String state,
 			@RequestParam(value = "keyWord",defaultValue = "") String keyWord
 			){
 		List<ActivityListResponseDTO> activityListDTO = new ArrayList<ActivityListResponseDTO>();
+
+		for(ActivityListResponseDTO dto : activityListDTO) {
+			System.out.println(dto.getCreateAt());
+		}
 		try {
 			activityListDTO = this.activityService.allActivity(keyWord, state);
 		}catch(Exception e) {
@@ -82,7 +87,12 @@ public class ActivityController {
 		if(bindingResult.hasErrors()) {
 			return ResponseEntity.noContent().build();
 		}
-		this.activityService.createProject(dto, principal.getName());
-		return ResponseEntity.ok("프로젝트 생성을 완료했습니다.");
+		try {
+			this.activityService.createProject(dto, principal.getName());
+			return ResponseEntity.ok("프로젝트 생성을 완료했습니다.");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
 	}
 }

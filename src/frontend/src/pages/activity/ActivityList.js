@@ -71,18 +71,19 @@ const ActivityList = () => {
         } else {
           console.log('여기성공');
           const activitiesList = response.data.map(res => {
+            console.log(res.createAt);
             return {
               id: res.id,
               goalCnt: res.goalCnt,
-              deadLine: res.DeadLine,
+              deadLine: res.deadLine,
               title: res.title,
               currentCnt: res.curruntCnt,
-              createDate: res.createdAt,
+              createDate: res.createAt,
               imgUri: res.imgUri
             };
           });
           setActivity(activitiesList);
-          console.log(activities);
+          console.log(activitiesList);
         }
       })
       .catch(error => {

@@ -39,7 +39,6 @@ public class SecurityConfig {
 				.antMatchers("/h2-console/**")
 				.antMatchers("/static/**")
 				.antMatchers("/api/**");
-
 	}
 
 	@Bean

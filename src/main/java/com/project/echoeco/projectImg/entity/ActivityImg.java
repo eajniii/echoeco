@@ -1,13 +1,13 @@
-package com.project.echoeco.projectImg;
+package com.project.echoeco.projectImg.entity;
 
-import javax.persistence.Column;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import com.project.echoeco.funding.Funding;
+import com.project.echoeco.activity.entity.Activity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,19 +19,20 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProjectImg {
+public class ActivityImg {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "projectImgId")
 	private Integer id;
-//
-//	// 대표이미지 설정
-//	private String YorN;
-//
-//	private String imgurl;
-////	
-//	@ManyToOne
-//	private Funding funding;
 	
+	private String YorN;
+	
+	private String oriName;
+	
+	private String name;
+	
+	private String imgurl;
+	
+	@ManyToOne(cascade = CascadeType.ALL)
+	private Activity activity;
 }
