@@ -10,13 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @CrossOrigin(originPatterns = "http://localhost:3000")
 @RequiredArgsConstructor
 @RequestMapping("/fundings")
-@Slf4j
 public class FundingController {
 
   private final FundingService projectService;

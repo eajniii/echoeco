@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.project.echoeco.activity.dto.ActivityDTO;
 import com.project.echoeco.activity.dto.ActivityListResponseDTO;
@@ -19,8 +18,9 @@ import com.project.echoeco.activity.repository.ActivityRepository;
 import com.project.echoeco.addrEntity.StateRepository;
 import com.project.echoeco.common.constant.ProjectStatus;
 import com.project.echoeco.member.Member;
-import com.project.echoeco.member.MemberRepository;
 import com.project.echoeco.projectImg.service.ProjectImgService;
+import com.project.echoeco.member.auth.MemberRepository;
+
 
 import lombok.RequiredArgsConstructor;
 
@@ -34,21 +34,21 @@ public class ActivityService {
 	private final StateRepository stateRepository;
 	private final ProjectImgService projectImgService;
 
-	public List<ActivityListResponseDTO> allActivity( String keyWord,String stateName) {
-		if(stateName.equals("")) {
+	public List<ActivityListResponseDTO> allActivity(String keyWord, String stateName) {
+		if (stateName.equals("")) {
 			List<Activity> activity = this.activityRepository.findAllActivityWithKeyWord(keyWord);
 			List<ActivityListResponseDTO> activityListDTO = new ArrayList<ActivityListResponseDTO>();
-			for(Activity at : activity) {
+			for (Activity at : activity) {
 				ActivityListResponseDTO activitydto = new ActivityListResponseDTO();
 				activitydto.setActivityListDTO(at);
 				activityListDTO.add(activitydto);
 			}
 			return activityListDTO;
-		}else {
+		} else {
 			Optional<State> state = this.stateRepository.findByState(stateName);
-			List<Activity> activity = this.activityRepository.findAllActivitiesWithKeywordAndState(keyWord,state.get());
+			List<Activity> activity = this.activityRepository.findAllActivitiesWithKeywordAndState(keyWord, state.get());
 			List<ActivityListResponseDTO> activityListDTO = new ArrayList<ActivityListResponseDTO>();
-			for(Activity at : activity) {
+			for (Activity at : activity) {
 				ActivityListResponseDTO activitydto = new ActivityListResponseDTO();
 				activitydto.setActivityListDTO(at);
 				activityListDTO.add(activitydto);
@@ -65,6 +65,7 @@ public class ActivityService {
 			throw new NullPointerException("현제 삭제된 페이지 입니다.");
 		}
 	}
+
 	// 프로젝트 수정하기
 	public void modifyProject(ActivityDTO dto, Integer idx, String email) throws Exception {
 		Optional<Activity> _activity = this.activityRepository.findById(idx);
@@ -72,18 +73,19 @@ public class ActivityService {
 			Activity activity = _activity.get();
 			if (email.equals(activity.getCreatedBy())) {
 				Activity updatedActivity = activity.toBuilder()
-					    .modifiedAt(LocalDateTime.now())
-					    .modifiedBy(email)
-					    .deadLine(dto.getDeadLine())
-					    .title(dto.getTitle())
-					    .contents(dto.getContent())
-					    .build();
+						.modifiedAt(LocalDateTime.now())
+						.modifiedBy(email)
+						.deadLine(dto.getDeadLine())
+						.title(dto.getTitle())
+						.contents(dto.getContent())
+						.build();
 				this.activityRepository.save(updatedActivity);
 			} else {
 				throw new AccessDeniedException("접근권한이 없습니다.");
 			}
 		}
 	}
+
 	// 프로젝트 생성하기
 	public void createProject(ActivityDTO dto, String email) throws Exception {
 		Optional<State> _state = this.stateRepository.findByState(dto.getState());
@@ -106,9 +108,8 @@ public class ActivityService {
 				this.projectImgService.ActivityImg(dto.getActivityImg().get(i), activity, "N");
 			}
 		}
-		
-		
 	}
+
 	// 신청하기
 	public void participate(Integer activity_idx, Long member_idx) throws Exception {
 
@@ -129,13 +130,14 @@ public class ActivityService {
 						.member(member)
 						.build();
 				this.participateRepository.save(participate);
-				
-				activity.builder().curruntCnt(activity.getCurruntCnt()+1);
+
+				// activity.builder().curruntCnt(activity.getCurruntCnt() + 1);
 				this.activityRepository.save(activity);
 			}
 		} else {
 			throw new Exception("다시 시도해 주세요");
 		}
+
 	}
 
 	// 삭제하기

@@ -13,8 +13,6 @@ import javax.persistence.OneToMany;
 import com.project.echoeco.comment.Comment;
 import com.project.echoeco.common.BaseMember;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @Entity
@@ -25,7 +23,7 @@ public class Board extends BaseMember {
   @Column(name = "boardId")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
-
+  @Column
   private String title;
 
   @Lob

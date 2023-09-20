@@ -24,6 +24,7 @@ import lombok.experimental.SuperBuilder;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class Activity extends BaseProject {
 
 	private Integer goalCnt;
@@ -33,7 +34,7 @@ public class Activity extends BaseProject {
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "projectImgId")
 	private List<ActivityImg> activityImg;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "state_id")
 	private State state;

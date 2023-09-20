@@ -12,13 +12,11 @@ import lombok.NoArgsConstructor;
 public class MemberInfoResponse {
   private String email;
   private String nickname;
-  private Integer tel;
 
   public static MemberInfoResponse fromMember(Member member) {
     return MemberInfoResponse.builder()
         .email(member.getEmail())
         .nickname(member.getNickname())
-        .tel(member.getTel())
         .build();
   }
 }

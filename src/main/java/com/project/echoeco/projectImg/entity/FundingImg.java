@@ -31,5 +31,4 @@ public class FundingImg {
 	private String imgurl;
 	@ManyToOne
 	private Funding funding;
-	
 }
