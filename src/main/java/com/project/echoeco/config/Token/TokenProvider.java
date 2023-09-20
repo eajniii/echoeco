@@ -29,8 +29,8 @@ import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SecurityException;
 import lombok.extern.slf4j.Slf4j;
 
-@Component
 @Slf4j
+@Component
 public class TokenProvider {
 
   private static final String AUTHORITIES_KEY = "auth";
@@ -73,7 +73,7 @@ public class TokenProvider {
     Claims claims = parseClaims(accessToken);
 
     if (claims.get(AUTHORITIES_KEY) == null) {
-      throw new AppException(ErrorCode.EXPIRED_TOKEN);
+      throw new AppException(ErrorCode.EXPIRED_TOKEN,ErrorCode.EXPIRED_TOKEN.getMessage());
     }
 
     Collection<? extends GrantedAuthority> authorities = Arrays

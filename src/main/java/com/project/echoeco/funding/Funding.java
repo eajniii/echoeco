@@ -25,8 +25,8 @@ public class Funding extends BaseProject {
 
   private BigDecimal currentAmount;
 
-  @OneToMany(cascade = CascadeType.ALL)
-  @JoinColumn(name = "projectImgId")
-  private List<ProjectImg> fundingImg;
+//  @OneToMany(cascade = CascadeType.ALL)
+//  @JoinColumn(name = "projectImgId")
+//  private List<ProjectImg> fundingImg;
 
 }

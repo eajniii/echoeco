@@ -19,8 +19,6 @@ import lombok.experimental.SuperBuilder;
 
 @Entity
 @SuperBuilder
-@NoArgsConstructor
-@AllArgsConstructor
 public class Board extends BaseMember {
 
   @Id

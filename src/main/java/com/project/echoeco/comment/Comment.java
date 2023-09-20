@@ -18,8 +18,6 @@ import lombok.experimental.SuperBuilder;
 
 @Entity
 @SuperBuilder
-@AllArgsConstructor
-@NoArgsConstructor
 public class Comment extends BaseMember {
 
   @Id
