@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 import com.project.echoeco.common.BaseProject;
 import com.project.echoeco.projectImg.ProjectImg;
@@ -25,6 +24,7 @@ import lombok.experimental.SuperBuilder;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class Activity extends BaseProject {
 
 	private Integer goalCnt;
@@ -34,7 +34,7 @@ public class Activity extends BaseProject {
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "projectImgId")
 	private List<ProjectImg> activityImg;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "state_id")
 	private State state;

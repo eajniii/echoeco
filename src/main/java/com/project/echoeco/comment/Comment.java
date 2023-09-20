@@ -12,8 +12,6 @@ import javax.persistence.ManyToOne;
 import com.project.echoeco.board.Board;
 import com.project.echoeco.common.BaseMember;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @Entity
@@ -25,6 +23,7 @@ public class Comment extends BaseMember {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
+  @Column
   private String contents;
 
   @ManyToOne(fetch = FetchType.LAZY)

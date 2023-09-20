@@ -59,7 +59,7 @@ public class TokenProvider {
         .setSubject(authentication.getName())
         .claim(AUTHORITIES_KEY, authorities)
         .setExpiration(tokenExpiresIn)
-        .signWith(key, SignatureAlgorithm.HS512)
+        .signWith(key, SignatureAlgorithm.HS256)
         .compact();
 
     return TokenCreation.builder()

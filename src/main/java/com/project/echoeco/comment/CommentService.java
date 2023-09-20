@@ -27,7 +27,7 @@ public class CommentService {
         .createdAt(LocalDateTime.now()) // 코멘트 작성시간
         .build();
 
-    Comment savedComment = commentRepository.save(comment);
+    commentRepository.save(comment);
     return new CommentCreateResponse();
 
   }
