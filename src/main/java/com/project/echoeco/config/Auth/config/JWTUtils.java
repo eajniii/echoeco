@@ -13,7 +13,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
 import com.project.echoeco.config.Auth.Account;
 
 import io.jsonwebtoken.Claims;
