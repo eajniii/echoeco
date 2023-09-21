@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.project.echoeco.common.exception.AppException;
 import com.project.echoeco.common.exception.ErrorCode;
 import com.project.echoeco.config.SecurityUtil;
+import com.project.echoeco.member.auth.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,7 +22,7 @@ public class MemberService {
 	public MemberInfoResponse getMypageBySecurity() {
 		return memberRepository.findById(SecurityUtil.getCurrentMemberId())
 				.map(MemberInfoResponse::fromMember)
-				.orElseThrow(() -> new AppException(ErrorCode.UNKNOWN_MEMBER));
+				.orElseThrow(() -> new AppException(ErrorCode.UNKNOWN_MEMBER, ErrorCode.UNKNOWN_MEMBER.getMessage()));
 
 	}
 

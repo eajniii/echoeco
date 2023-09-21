@@ -49,9 +49,7 @@ public class Member extends BaseTime implements UserDetails {
 	@Column(unique = true)
 	private String nickname;
 
-	private Integer tel;
-
-	@Enumerated(EnumType.STRING)
+	@Enumerated(EnumType.STRING) // DB에 저장될 때 문자로 저장되게 함
 	private Role role;
 
 	@Override

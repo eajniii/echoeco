@@ -19,29 +19,24 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @CrossOrigin(originPatterns = "http://localhost:3000")
 public class MemberController {
-  private final MemberService memberService;
+	private final MemberService memberService;
 
-  @GetMapping("/main")
-  public String main() {
-	  return "/main";
-  }
-  
-  @GetMapping("/mypage")
-  public ResponseEntity<MemberInfoResponse> getMemberInfo() {
-    MemberInfoResponse mypageBySecurity = memberService.getMypageBySecurity();
-    log.info(mypageBySecurity.getNickname());
+	@GetMapping("/mypage")
+	public ResponseEntity<MemberInfoResponse> getMemberInfo() {
+		MemberInfoResponse mypageBySecurity = memberService.getMypageBySecurity();
+		log.info(mypageBySecurity.getNickname());
 
-    return ResponseEntity.ok(memberService.getMypageBySecurity());
-  }
+		return ResponseEntity.ok(memberService.getMypageBySecurity());
+	}
 
-  @PostMapping("/modify/nickname")
-  public ResponseEntity<MemberInfoResponse> changeNickname(@RequestBody MemberJoinRequest dto) {
-    return ResponseEntity.ok(memberService.changeMemberNickname(dto.getEmail(), dto.getName()));
-  }
+	@PostMapping("/modify/nickname")
+	public ResponseEntity<MemberInfoResponse> changeNickname(@RequestBody MemberRequest dto) {
+		return ResponseEntity.ok(memberService.changeMemberNickname(dto.getEmail(), dto.getNickname()));
+	}
 
-  @PostMapping("/modify/password")
-  public ResponseEntity<MemberInfoResponse> changePassword(@RequestBody PasswordChangeRequest dto) {
-    return ResponseEntity
-        .ok(memberService.changeMemberPassword(dto.getEmail(), dto.getExPassword(), dto.getNewPassword()));
-  }
+	@PostMapping("/modify/password")
+	public ResponseEntity<MemberInfoResponse> changePassword(@RequestBody PasswordChangeRequest dto) {
+		return ResponseEntity
+				.ok(memberService.changeMemberPassword(dto.getEmail(), dto.getExPassword(), dto.getNewPassword()));
+	}
 }
