@@ -47,6 +47,18 @@ export const signupActionHandler = (email, password, nickname) => {
 
   return response;
 };
+export const checkDupliatedEmailHandler = email => {
+  const URL = '/auth/check-email';
+  const checkEmailObject = { email };
+  const response = POST(URL, checkEmailObject, {});
+  return response;
+};
+export const checkDupliatedNicknameHandler = nickname => {
+  const URL = '/auth/check-nickname';
+  const checkNicknameObject = { nickname };
+  const response = POST(URL, checkNicknameObject, {});
+  return response;
+};
 export const loginActionHandler = (email, password) => {
   const URL = '/auth/login';
   const loginObject = { email, password };

@@ -1,6 +1,7 @@
 import React, { useState, useContext, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from '../../common/authRelated/AuthContext';
+import Signup from './Signup';
 
 const Login = () => {
   const [emailInput, setEmailInput] = useState('');
@@ -60,8 +61,12 @@ const Login = () => {
           <div id="msg"> {passwordMsg} </div>
         </div>
         <div className="col-12">
+          <a href="#">ID/PASSWORD 찾기</a>
           <button type="submit" className="btn btn-warning" id="btnSubmit">
             Login
+          </button>
+          <button className="btn btn-success">
+            <a href="./Signup">Signup</a>
           </button>
           {isLoading && <p>Loding...</p>}
         </div>
@@ -70,37 +75,3 @@ const Login = () => {
   );
 };
 export default Login;
-// import axios from 'axios';
-
-// const JWT_EXPIRY_TIME = 60 * 60 * 1000;
-
-// onLogin = (email, password) => {
-//   const data = {
-//     email,
-//     password
-//   };
-//   axios
-//     .post('/login', data)
-//     .then(response => {
-//       const { accessToken } = response.data;
-
-//       axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-//     })
-//     .catch(error => {});
-// };
-
-// onSilentRefresh = () => {
-//   axios
-//     .post('/silent-refresh', data)
-//     .then(onLoginSuccess)
-//     .catch(error => {});
-// };
-
-// onLoginSuccess = response => {
-//   const { accessToken } = response.data;
-//   // accessToken 설정
-//   axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-
-//   // accessToken 만료하기 1분 전에 로그인 연장
-//   setTimeout(onSilentRefresh, JWT_EXPIRRY_TIME - 60000);
-// };

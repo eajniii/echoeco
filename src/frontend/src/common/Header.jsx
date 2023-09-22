@@ -1,9 +1,34 @@
-import React from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import logo from '../img/로고.png';
+import AuthContext from './authRelated/AuthContext';
 
-function Header(props) {
-  const location = useLocation;
+const Header = () => {
+  const auth = useContext(AuthContext);
+  const [nickname, setNickname] = useState('');
+  let isMember = auth.isConnected;
+  let isSuccess = auth.isGetSuccess;
+  const location = useLocation();
+  const callback = str => {
+    setNickname(str);
+  };
+  useEffect(() => {
+    if (isMember) {
+      console.log('start');
+      auth.getUser();
+    }
+  }, [auth, isMember]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      callback(auth.userObject.nickname);
+      console.log('get start');
+    }
+  }, [auth.userObject.nickname, isSuccess]);
+  const toggleLogoutHandler = () => {
+    auth.logout();
+  };
+
   return (
     <>
       <header id="header">
@@ -23,6 +48,7 @@ function Header(props) {
             >
               <span className="navbar-toggler-icon"></span>
             </button>
+            <span> {isMember && `${nickname}님 반가워요!`} </span>
             <a className="logo" href="/">
               <img src={logo} alt="ECHO ECO" width={'70px;'} />
             </a>
@@ -30,23 +56,36 @@ function Header(props) {
               <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                 <li className="nav-item">
                   <a className="nav-link active" aria-current="page" href="#">
-                    Projects
+                    ECHO Item ZONE
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link active" aria-current="page" href="#">
+                    ECHO Action ZONE
                   </a>
                 </li>
                 <li className="nav-item">
                   <a className="nav-link" href="#">
-                    Board
+                    ECHO BOARD
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" aria-disabled="true">
-                    Login
-                  </a>
+                  {!isMember && <Link to="/login">Login</Link>}
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" aria-disabled="true">
-                    MyPage
-                  </a>
+                  {isMember && <Link to="/member/mypage">my page</Link>}
+                </li>
+                <li className="nav-item">
+                  {isMember ? (
+                    <button
+                      onClick={toggleLogoutHandler}
+                      className="btn btn-success"
+                    >
+                      Logout
+                    </button>
+                  ) : (
+                    <button className="btn btn-success">Signup</button>
+                  )}
                 </li>
               </ul>
               <form className="d-flex" role="search">
@@ -64,14 +103,8 @@ function Header(props) {
           </div>
         </nav>
       </header>
-      <ul>
-        <li>{location.fundingList} crowd funding</li>
-        <li>{location.activityList} crowd activity</li>
-        <li>{location.boardList} 게시판 </li>
-        <li>{location.notice} 공지 </li>
-      </ul>
       <form action="search" method="post"></form>
     </>
   );
-}
+};
 export default Header;
