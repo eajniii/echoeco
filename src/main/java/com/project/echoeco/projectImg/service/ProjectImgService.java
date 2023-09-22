@@ -1,5 +1,7 @@
 package com.project.echoeco.projectImg.service;
 
+import java.util.Optional;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -54,7 +56,16 @@ public class ProjectImgService {
 	           url = "/echoeco/img" + name;
 	    }
 		
-		ActivityImg projectImg = ActivityImg.builder().name(name).oriName(oriName).activity(activity).imgurl(url).YorN(YorN).build();
+		ActivityImg projectImg = ActivityImg.builder().name(name).oriName(oriName).activity(activity).imgurl(url).yorn(YorN).build();
 		this.activityImgRepository.save(projectImg);
+	}
+	public ActivityImg getActivityImg(Activity activity) {
+		
+		Optional<ActivityImg> _activityImg = this.activityImgRepository.findByActivityAndYorn(activity, "Y");
+		if(_activityImg.isEmpty()) {
+			return null;
+		}else {
+			return _activityImg.get();
+		}
 	}
 }

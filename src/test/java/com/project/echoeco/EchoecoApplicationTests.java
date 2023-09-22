@@ -1,16 +1,19 @@
 package com.project.echoeco;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.project.echoeco.activity.entity.Activity;
-import com.project.echoeco.activity.entity.State;
 import com.project.echoeco.activity.repository.ActivityRepository;
 import com.project.echoeco.addrEntity.StateRepository;
 import com.project.echoeco.common.constant.ProjectStatus;
@@ -117,10 +120,18 @@ class EchoecoApplicationTests {
 		// 내용1").modifiedAt(LocalDateTime.now()).title("수정됐지롱1").build();
 		// System.out.println(modifyAt.getContents()+modifyAt.getTitle());
 		// this.atvtRepository.save(modifyAt);
-		Optional<State> state = this.stateRepository.findByState("고양시");
-		List<Activity> _activity = this.atvtRepository.findAllActivitiesWithKeywordAndState("수정", state.get());
-		for (Activity activity : _activity) {
-			System.out.println(activity.getContents() + activity.getId());
+//		Optional<State> state = this.stateRepository.findByState("고양시");
+//		List<Activity> _activity = this.atvtRepository.findAllActivitiesWithKeywordAndState("수정", state.get());
+//		for (Activity activity : _activity) {
+//			System.out.println(activity.getContents() + activity.getId());
+//		}
+		List<Sort.Order> sorts = new ArrayList();
+		sorts.add(Sort.Order.desc("createdAt"));
+		System.out.println(2);
+		Pageable pageable = PageRequest.of(1, 10, Sort.by(sorts));
+		Page<Activity> activity = this.atvtRepository.findAllActivityWithKeyWord("", pageable);
+		for(Activity at : activity) {
+			System.out.println(at.getId());
 		}
 	}
 }

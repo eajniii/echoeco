@@ -25,7 +25,7 @@ public class ActivityImg {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	private String YorN;
+	private String yorn;
 	
 	private String oriName;
 	

@@ -6,10 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.project.echoeco.activity.dto.ActivityDTO;
-import com.project.echoeco.activity.dto.ActivityListResponseDTO;
 import com.project.echoeco.activity.entity.Activity;
 import com.project.echoeco.activity.entity.Activity_Member;
 import com.project.echoeco.activity.entity.State;
@@ -34,26 +37,17 @@ public class ActivityService {
 	private final StateRepository stateRepository;
 	private final ProjectImgService projectImgService;
 
-	public List<ActivityListResponseDTO> allActivity(String keyWord, String stateName) {
+	public Page<Activity> allActivity(String keyWord, String stateName, int page) {
+		List<Sort.Order> sorts = new ArrayList();
+		sorts.add(Sort.Order.desc("createdAt"));
+		Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
 		if (stateName.equals("")) {
-			List<Activity> activity = this.activityRepository.findAllActivityWithKeyWord(keyWord);
-			List<ActivityListResponseDTO> activityListDTO = new ArrayList<ActivityListResponseDTO>();
-			for (Activity at : activity) {
-				ActivityListResponseDTO activitydto = new ActivityListResponseDTO();
-				activitydto.setActivityListDTO(at);
-				activityListDTO.add(activitydto);
-			}
-			return activityListDTO;
+			Page<Activity> activity = this.activityRepository.findAllActivityWithKeyWord(keyWord, pageable);
+			return activity;
 		} else {
 			Optional<State> state = this.stateRepository.findByState(stateName);
-			List<Activity> activity = this.activityRepository.findAllActivitiesWithKeywordAndState(keyWord, state.get());
-			List<ActivityListResponseDTO> activityListDTO = new ArrayList<ActivityListResponseDTO>();
-			for (Activity at : activity) {
-				ActivityListResponseDTO activitydto = new ActivityListResponseDTO();
-				activitydto.setActivityListDTO(at);
-				activityListDTO.add(activitydto);
-			}
-			return activityListDTO;
+			Page<Activity> activity = this.activityRepository.findAllActivitiesWithKeywordAndState(keyWord, state.get(),pageable);
+			return activity;
 		}
 	}
 
@@ -131,7 +125,6 @@ public class ActivityService {
 						.build();
 				this.participateRepository.save(participate);
 
-				// activity.builder().curruntCnt(activity.getCurruntCnt() + 1);
 				this.activityRepository.save(activity);
 			}
 		} else {

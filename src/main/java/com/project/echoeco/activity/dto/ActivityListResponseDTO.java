@@ -3,6 +3,7 @@ package com.project.echoeco.activity.dto;
 import java.time.format.DateTimeFormatter;
 
 import com.project.echoeco.activity.entity.Activity;
+import com.project.echoeco.projectImg.entity.ActivityImg;
 
 import lombok.Data;
 
@@ -33,5 +34,6 @@ public class ActivityListResponseDTO {
 //		this.deadLine = activity.getDeadLine().format(DateTimeFormatter.ofPattern("yy년 MM월 dd일 HH:mm:ss"));
 		this.goalCnt = activity.getGoalCnt();
 		this.currentCnt = activity.getCurruntCnt();
+//		this.imgUri = activityImg.getImgurl();
 	}
 }

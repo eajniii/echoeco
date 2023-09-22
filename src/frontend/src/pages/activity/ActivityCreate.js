@@ -2,16 +2,23 @@ import React, { useState } from 'react';
 import './../../css/activityCreate.css';
 
 const ActivityCreate = () => {
-  const [dateValue, setDateValue] = useState(''); // 초기값을 빈 문자열로 설정
+  const [deadLine, setDateValue] = useState(''); // 초기값을 빈 문자열로 설정
   const [imageFields, setImageFields] = useState([]); // 이미지 필드 목록을 관리하는 state
-  const [Title, setTitle] = useState(``);
-
+  const [title, setTitle] = useState(``);
+  const [object, setObject] = useState(``);
+  const [contents, setContent] = useState(``);
   const changeTitleValue = e => {
     setTitle(e.target.value);
   };
   const changeDateValue = e => {
-    setDateValue(e.target.value);
-    console.log(e.target.value);
+    const selectedDate = new Date(e.target.value);
+    const today = new Date();
+
+    if (selectedDate < today) {
+      alert('기간은 오늘 기준으로 이전 날짜일 수 없습니다.');
+    } else {
+      setDateValue(e.target.value);
+    }
   };
 
   const addImage = () => {
@@ -20,6 +27,12 @@ const ActivityCreate = () => {
 
   const removeImage = id => {
     setImageFields(imageFields.filter(field => field.id !== id));
+  };
+  const changeObjectValue = e => {
+    setObject(e.target.value);
+  };
+  const changeContentsValue = e => {
+    setContent(e.target.value);
   };
 
   return (
@@ -35,10 +48,42 @@ const ActivityCreate = () => {
           </label>
           <input
             type="text"
-            value={Title}
+            value={title}
             name="title"
             className="form-control"
             onChange={changeTitleValue}
+          />
+        </div>
+        <div>
+          <label
+            for="object"
+            className="input-group-text"
+            id="inputFroup-sizing-sm"
+          >
+            object
+          </label>
+          <input
+            type="text"
+            value={object}
+            name="Object"
+            className="form-control"
+            onChange={changeObjectValue}
+          />
+        </div>
+        <div>
+          <label
+            for="contents"
+            className="input-group-text"
+            id="inputFroup-sizing-sm"
+          >
+            contents
+          </label>
+          <textarea
+            type="text"
+            value={contents}
+            name="contents"
+            className="form-control"
+            onChange={changeContentsValue}
           />
         </div>
         <div>
@@ -51,7 +96,7 @@ const ActivityCreate = () => {
           </label>
           <input
             type="date"
-            value={dateValue}
+            value={deadLine}
             onChange={changeDateValue}
             className="form-control"
             name="deadLine"

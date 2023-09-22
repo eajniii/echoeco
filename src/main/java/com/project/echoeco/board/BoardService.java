@@ -40,23 +40,19 @@ public class BoardService {
 		return board;
 	}
 
-	// public void modified(String email, Integer BoardIdx, BoardCreateRequest dto)
-	// {
-	// Optional<Board> _board = this.boardRepository.findById(BoardIdx);
-	// if (_board.isEmpty()) {
-	// throw new NullPointerException("삭제된 게시물입니다.");
-	// } else {
-	// Board board = _board.get();
-	// if (board.getCreatedBy().equals(email)) {
-	// board.builder().title(dto.getTitle())
-	// .contents(dto.getContents())
-	// .modifiedAt(LocalDateTime.now())
-	// .modifiedBy(email)
-	// .build();
-	// this.boardRepository.save(board);
-	// } else {
-	// throw new AccessDeniedException("권한이 없는 계정입니다.");
-	// }
-	// }
-	// }
+	public void modifyBoard(Integer BoardIdx, BoardCreateRequest boardDTO) {
+		Optional<Board> board = this.boardRepository.findById(BoardIdx);
+		if(board.isEmpty()) {
+			throw new NullPointerException();
+		}else {
+			Board modifyBoard = board.get().toBuilder()
+					.modifiedAt(LocalDateTime.now())
+					.modifiedBy(null)
+					.contents(boardDTO.getContents())
+					.title(boardDTO.getTitle()).build();
+			this.boardRepository.save(modifyBoard);
+		}
+		
+	}
+
 }
