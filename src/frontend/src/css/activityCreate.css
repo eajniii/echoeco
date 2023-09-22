@@ -1,0 +1,14 @@
+.ActivityCreate{
+    margin: 0 auto;
+    padding: 0 auto;
+    width: 70%;
+}
+.ActivityCreate div{
+    margin-top: 2%;
+}
+.ActivityCreate div input{
+    margin-top: 1.5%;
+}
+.ActivityCreate div *{
+    text-align: center;
+}

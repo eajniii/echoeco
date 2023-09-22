@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import javax.persistence.Entity;
 
 import com.project.echoeco.common.BaseProject;
+import com.project.echoeco.projectImg.entity.FundingImg;
 
 import lombok.Getter;
 import lombok.ToString;

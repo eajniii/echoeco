@@ -6,10 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.project.echoeco.activity.dto.ActivityDTO;
-import com.project.echoeco.activity.dto.ActivityListResponseDTO;
 import com.project.echoeco.activity.entity.Activity;
 import com.project.echoeco.activity.entity.Activity_Member;
 import com.project.echoeco.activity.entity.State;
@@ -18,7 +21,9 @@ import com.project.echoeco.activity.repository.ActivityRepository;
 import com.project.echoeco.addrEntity.StateRepository;
 import com.project.echoeco.common.constant.ProjectStatus;
 import com.project.echoeco.member.Member;
+import com.project.echoeco.projectImg.service.ProjectImgService;
 import com.project.echoeco.member.auth.MemberRepository;
+
 
 import lombok.RequiredArgsConstructor;
 
@@ -30,27 +35,19 @@ public class ActivityService {
 	private final MemberRepository memberRepository;
 	private final ATVT_ParticipantsRepository participateRepository;
 	private final StateRepository stateRepository;
+	private final ProjectImgService projectImgService;
 
-	public List<ActivityListResponseDTO> allActivity(String keyWord, String stateName) {
+	public Page<Activity> allActivity(String keyWord, String stateName, int page) {
+		List<Sort.Order> sorts = new ArrayList();
+		sorts.add(Sort.Order.desc("createdAt"));
+		Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
 		if (stateName.equals("")) {
-			List<Activity> activity = this.activityRepository.findAllActivityWithKeyWord(keyWord);
-			List<ActivityListResponseDTO> activityListDTO = new ArrayList<ActivityListResponseDTO>();
-			for (Activity at : activity) {
-				ActivityListResponseDTO activitydto = new ActivityListResponseDTO();
-				activitydto.setActivityListDTO(at);
-				activityListDTO.add(activitydto);
-			}
-			return activityListDTO;
+			Page<Activity> activity = this.activityRepository.findAllActivityWithKeyWord(keyWord, pageable);
+			return activity;
 		} else {
 			Optional<State> state = this.stateRepository.findByState(stateName);
-			List<Activity> activity = this.activityRepository.findAllActivitiesWithKeywordAndState(keyWord, state.get());
-			List<ActivityListResponseDTO> activityListDTO = new ArrayList<ActivityListResponseDTO>();
-			for (Activity at : activity) {
-				ActivityListResponseDTO activitydto = new ActivityListResponseDTO();
-				activitydto.setActivityListDTO(at);
-				activityListDTO.add(activitydto);
-			}
-			return activityListDTO;
+			Page<Activity> activity = this.activityRepository.findAllActivitiesWithKeywordAndState(keyWord, state.get(),pageable);
+			return activity;
 		}
 	}
 
@@ -84,7 +81,7 @@ public class ActivityService {
 	}
 
 	// 프로젝트 생성하기
-	public void createProject(ActivityDTO dto, String email) {
+	public void createProject(ActivityDTO dto, String email) throws Exception {
 		Optional<State> _state = this.stateRepository.findByState(dto.getState());
 		Activity activity = Activity.builder()
 				.contents(dto.getContent())
@@ -97,7 +94,14 @@ public class ActivityService {
 				.deadLine(dto.getDeadLine())
 				.build();
 		this.activityRepository.save(activity);
-
+		
+		for(int i = 0; i<dto.getActivityImg().size(); i++) {
+			if(i == 0) {
+				this.projectImgService.ActivityImg(dto.getActivityImg().get(i), activity, "Y");
+			}else {
+				this.projectImgService.ActivityImg(dto.getActivityImg().get(i), activity, "N");
+			}
+		}
 	}
 
 	// 신청하기
@@ -121,7 +125,6 @@ public class ActivityService {
 						.build();
 				this.participateRepository.save(participate);
 
-				// activity.builder().curruntCnt(activity.getCurruntCnt() + 1);
 				this.activityRepository.save(activity);
 			}
 		} else {

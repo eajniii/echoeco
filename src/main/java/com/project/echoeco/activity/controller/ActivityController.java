@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -19,11 +20,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.project.echoeco.activity.dto.ActivityDTO;
 import com.project.echoeco.activity.dto.ActivityListResponseDTO;
 import com.project.echoeco.activity.dto.ActivityResponseDTO;
 import com.project.echoeco.activity.entity.Activity;
 import com.project.echoeco.activity.service.ActivityService;
+import com.project.echoeco.projectImg.entity.ActivityImg;
+import com.project.echoeco.projectImg.service.ProjectImgService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -35,19 +39,24 @@ public class ActivityController {
 
 	private final ActivityService activityService;
 	
+	private final ProjectImgService projectImgService;
 	
-	@GetMapping
+	@GetMapping("/list")
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	public ResponseEntity<List<ActivityListResponseDTO>> findAllActivity(
 			@RequestParam(value = "state",defaultValue = "") String state,
-			@RequestParam(value = "keyWord",defaultValue = "") String keyWord
+			@RequestParam(value = "keyWord",defaultValue = "") String keyWord,
+			@RequestParam(value = "page" , defaultValue = "0") int page
 			){
-		List<ActivityListResponseDTO> activityListDTO = new ArrayList<ActivityListResponseDTO>();
-		try {
-			activityListDTO = this.activityService.allActivity(keyWord, state);
-		}catch(Exception e) {
-			e.printStackTrace();
+		Page<Activity> activity = this.activityService.allActivity(keyWord, state, page);
+		List<ActivityListResponseDTO> listDTO = new ArrayList<>(); 
+		for(Activity at: activity) {
+//			ActivityImg img = this.projectImgService.getActivityImg(at);
+			ActivityListResponseDTO dto = new ActivityListResponseDTO();
+			dto.setActivityListDTO(at);
+			listDTO.add(dto);
 		}
-		return ResponseEntity.ok(activityListDTO);
+		return ResponseEntity.ok(listDTO);
 	}
 
 	@GetMapping(value = "/{activity_id}")
@@ -82,7 +91,12 @@ public class ActivityController {
 		if(bindingResult.hasErrors()) {
 			return ResponseEntity.noContent().build();
 		}
-		this.activityService.createProject(dto, principal.getName());
-		return ResponseEntity.ok("프로젝트 생성을 완료했습니다.");
+		try {
+			this.activityService.createProject(dto, principal.getName());
+			return ResponseEntity.ok("프로젝트 생성을 완료했습니다.");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
 	}
 }

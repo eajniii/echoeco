@@ -16,7 +16,7 @@ import com.project.echoeco.common.BaseMember;
 import lombok.experimental.SuperBuilder;
 
 @Entity
-@SuperBuilder
+@SuperBuilder(toBuilder = true)
 public class Board extends BaseMember {
 
   @Id

@@ -1,10 +1,11 @@
 package com.project.echoeco.activity.dto;
 
-import java.io.File;
 import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.validation.constraints.NotBlank;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
 
@@ -29,5 +30,5 @@ public class ActivityDTO {
 	@NotBlank(message = "마감일은 필수 입력란입니다.")
 	private LocalDateTime deadLine;
 	
-	private List<File> activityImg;
+	private List<MultipartFile> activityImg;
 }

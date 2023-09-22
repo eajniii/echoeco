@@ -56,41 +56,43 @@ const ActivityList = () => {
   }
   useEffect(() => {
     fetchActivity();
-  }, [keyword, state]);
+  }, [keyword, state, page]);
   const onChangeInput = e => {
     setKeyWord(e.target.value);
   };
   const fetchActivity = () => {
-    const url = `/api/activity/?keyWord=${keyword}&state=${state}`;
+    const url = `/api/activity/list/?keyWord=${keyword}&state=${state}&page=${page}`;
     axios
       .get(url)
       .then(response => {
         if (response.data === null) {
           console.log('실패');
-          console.log(response.data);
         } else {
-          console.log('여기성공');
-          const activitiesList = response.data.map(res => {
-            return {
-              id: res.id,
-              goalCnt: res.goalCnt,
-              deadLine: res.DeadLine,
-              title: res.title,
-              currentCnt: res.curruntCnt,
-              createDate: res.createdAt,
-              imgUri: res.imgUri
-            };
-          });
+          const activitiesList = response.data.map(res => ({
+            id: res.id,
+            goalCnt: res.goalCnt,
+            deadLine: res.deadLine,
+            title: res.title,
+            currentCnt: res.curruntCnt,
+            createDate: res.createAt,
+            imgUri: res.imgUri
+          }));
           setActivity(activitiesList);
-          console.log(activities);
         }
       })
       .catch(error => {
         console.error('활동 가져오기 오류:', error);
       });
   };
-  const handlePageChange = nextpage => {
-    setPage(nextpage);
+  const handleprePageChange = () => {
+    if (page <= 0) {
+      alert('이전페이지가 없습니다.');
+    } else {
+      setPage(page - 1);
+    }
+  };
+  const handlenextPageChange = () => {
+    setPage(page + 1);
   };
   return (
     <div>
@@ -116,30 +118,53 @@ const ActivityList = () => {
           </option>
         ))}
       </select>
-      <div>
-        <table>
-          <th>
-            <td>번호</td>
-            <td>제목</td>
-            <td>현제 인원/마감 인원</td>
-            <td>프로젝트 시작일</td>
-            <td>마감 일</td>
-          </th>
-          {activities.map(activity => (
-            <tr>
-              <Link to={`/activity/detail/${activity.id}`} key={activity.id}>
-                <td>{activity.id}</td>
-                <td>{activity.title}</td>
-                <td>
-                  {activity.currentCnt}/{activity.goalCnt}
-                </td>
-                <td>{activity.createDate}</td>
-                <td>{activity.deadLine}</td>
-              </Link>
-            </tr>
-          ))}
-        </table>
+      <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        {activities.map(activity => (
+          <Link to={`/activity/detail/${activity.id}`} key={activity.id}>
+            <div className="col">
+              <div className="card shadow-sm">
+                <svg
+                  className="bd-placeholder-img card-img-top"
+                  width="100%"
+                  height="225"
+                  xmlns={activity.imgUri}
+                  role="img"
+                  aria-label="Placeholder: Thumbnail"
+                  preserveAspectRatio="xMidYMid slice"
+                  focusable="false"
+                >
+                  <title>Placeholder</title>
+                  <rect width="100%" height="100%" fill="#55595c" />
+                  <text x="50%" y="50%" fill="#eceeef" dy=".3em">
+                    Thumbnail
+                  </text>
+                </svg>
+                <div className="card-body">
+                  <p className="card-text">{activity.title}</p>
+                  <p className="card-text">{activity.createDate}</p>
+                  <p className="card-text">
+                    (현재원) {activity.currentCnt}/{activity.goalCnt} (마감인원)
+                  </p>
+                  <div className="d-flex justify-content-between align-items-center">
+                    <small className="text-body-secondary">9 mins</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Link>
+        ))}
       </div>
+      <ul>
+        <li>
+          <span onClick={handleprePageChange}>이전</span>
+        </li>
+        <li>
+          <span>{page}</span>
+        </li>
+        <li>
+          <span onClick={handlenextPageChange}>다음</span>
+        </li>
+      </ul>
     </div>
   );
 };
